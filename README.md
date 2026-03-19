@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="assets/ontology-graph.png" alt="Ontology-on-Snowflake — 8 Classes, 8 Relations, Fully Mapped" width="100%"/>
+</p>
+
 # ontology-stack-builder
 
 A [Cortex Code](https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code) skill that generates the full **Ontology-on-Snowflake** stack from any relational schema through a 7-phase gated workflow.
@@ -5,9 +9,9 @@ A [Cortex Code](https://docs.snowflake.com/en/user-guide/cortex-code/cortex-code
 You bring your Snowflake tables and business questions. The skill builds the rest — metadata, abstract views, semantic models, and a Cortex Agent — in a single conversational session.
 
 For the architectural foundations, see the original blog series:
-- [Part 1 — Overview and Data Model]()
-- [Part 2 — Semantic Models]()
-- [Part 3 — AI-Powered Intelligence]()
+- [Part 1 — Overview and Data Model](https://medium.com/snowflake/ontology-on-snowflake-part-1-overview-and-data-model-9e8eeaac7363)
+- [Part 2 — Semantic Models](https://medium.com/snowflake/ontology-on-snowflake-part-2-semantic-models-9aa0fa9b9312)
+- [Part 3 — AI-Powered Intelligence](https://medium.com/snowflake/ontology-on-snowflake-part-3-ai-powered-intelligence-bbace87c6be1)
 
 ---
 
@@ -27,11 +31,11 @@ For the architectural foundations, see the original blog series:
 
 ```bash
 # User-level (all projects)
-git clone https://github.com/sfc-gh-tjia/ontology-stack-builder.git
-cp -r ontology-stack-builder ~/.snowflake/cortex/skills/ontology-stack-builder
+git clone https://github.com/sfc-gh-tjia/coco_skill_ontology_stack_builder.git
+cp -r coco_skill_ontology_stack_builder ~/.snowflake/cortex/skills/ontology-stack-builder
 
 # Or project-level (single project)
-cp -r ontology-stack-builder .cortex/skills/ontology-stack-builder
+cp -r coco_skill_ontology_stack_builder .cortex/skills/ontology-stack-builder
 ```
 
 ### Prerequisites

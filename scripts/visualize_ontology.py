@@ -363,13 +363,19 @@ def render_interactive_tree(name: str, children_map: dict, name_to_cls: dict,
     indent_px = depth * 24
 
     if has_children:
-        # Use expander for nodes with children, expanded by default at low depth
-        with st.expander(display, expanded=(depth < 2)):
-            if description:
-                st.caption(description)
-            for child in kids:
-                render_interactive_tree(child, children_map, name_to_cls,
-                                        depth + 1, max_depth, search)
+        # Use indented markdown (no expanders — parent context already uses one)
+        st.markdown(
+            f'<div style="margin-left:{indent_px}px; padding:4px 0; font-weight:bold;">{display}</div>',
+            unsafe_allow_html=True
+        )
+        if description:
+            st.markdown(
+                f'<div style="margin-left:{indent_px + 16}px; color:gray; font-size:0.85em;">{description}</div>',
+                unsafe_allow_html=True
+            )
+        for child in kids:
+            render_interactive_tree(child, children_map, name_to_cls,
+                                    depth + 1, max_depth, search)
     else:
         # Leaf node: render inline with indentation via markdown
         st.markdown(
@@ -425,15 +431,25 @@ def render_interactive_rel_tree(name: str, rel_children_map: dict, rel_by_name: 
     indent_px = depth * 24
 
     if has_children:
-        with st.expander(display, expanded=(depth < 2)):
-            if description:
-                st.caption(description)
-            cardinality = r.get("cardinality", "")
-            if cardinality:
-                st.caption(f"Cardinality: {cardinality}")
-            for child in kids:
-                render_interactive_rel_tree(child, rel_children_map, rel_by_name,
-                                           depth + 1, max_depth)
+        # Use indented markdown (no expanders — parent context already uses one)
+        st.markdown(
+            f'<div style="margin-left:{indent_px}px; padding:4px 0; font-weight:bold;">{display}</div>',
+            unsafe_allow_html=True
+        )
+        if description:
+            st.markdown(
+                f'<div style="margin-left:{indent_px + 16}px; color:gray; font-size:0.85em;">{description}</div>',
+                unsafe_allow_html=True
+            )
+        cardinality = r.get("cardinality", "")
+        if cardinality:
+            st.markdown(
+                f'<div style="margin-left:{indent_px + 16}px; color:gray; font-size:0.85em;">Cardinality: {cardinality}</div>',
+                unsafe_allow_html=True
+            )
+        for child in kids:
+            render_interactive_rel_tree(child, rel_children_map, rel_by_name,
+                                       depth + 1, max_depth)
     else:
         st.markdown(
             f'<div style="margin-left:{indent_px}px; padding:2px 0;">{display}</div>',
@@ -657,18 +673,22 @@ def build_agraph_nodes_edges(classes: list[dict], relations: list[dict],
             tooltip_parts.append(f"Covered via: {cov.get('covering_ancestor', '?')}")
         tooltip = "<br/>".join(tooltip_parts)
 
-        # Node shape: box for concrete, diamond for abstract
-        shape = "diamond" if cls.get("is_abstract") else "box"
+        # Node shape: diamond for abstract, box for concrete
+        is_abs = cls.get("is_abstract", False)
+        # Diamond labels render BELOW the shape on the white page background,
+        # so always use dark font for diamonds regardless of coverage status
+        font_color = "#2c3e50" if is_abs else c["font"]
 
         nodes.append(Node(
             id=name,
             label=label,
             title=tooltip,
             color={"background": c["background"], "border": border_color},
-            shape=shape,
-            size=20 if cls.get("is_abstract") else 25,
-            font={"color": c["font"], "size": 12},
+            shape="diamond" if is_abs else "box",
+            size=25,
+            font={"color": font_color, "size": 12},
             borderWidth=border_width,
+            borderWidthSelected=3,
         ))
         displayed.add(name)
 
@@ -685,9 +705,9 @@ def build_agraph_nodes_edges(classes: list[dict], relations: list[dict],
                     title=f"<b>{parent_cls.get('label', parent)}</b><br/><i>Not in visible set</i>",
                     color={"background": "#ecf0f1", "border": "#bdc3c7"},
                     shape="diamond",
-                    size=18,
-                    font={"color": "#95a5a6", "size": 11},
-                    borderWidth=1,
+                    size=25,
+                    font={"color": "#95a5a6", "size": 12},
+                    borderWidth=2,
                 ))
                 displayed.add(parent)
             edges.append(Edge(
