@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.cortex/
+uv.lock
+DB_STOCK_*/
+ontology-stack-builder
