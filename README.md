@@ -23,7 +23,7 @@ For the architectural foundations, see the original blog series:
 | **L2 — Ontology Metadata** | ~22 metadata tables with auto-populated seed data |
 | **L3 — Abstract Views** | Per-class abstract views, hierarchy views, view-generator procedure |
 | **L4 — Semantic Views** | Base semantic view (source tables) + ontology-layer semantic views |
-| **L5 — Cortex Agent** | Agent with intent-routed semantic view tools |
+| **L5 — Cortex Agent** | Agent with intent-routed tools: base + ontology + optional graph UDFs |
 
 ---
 
@@ -81,10 +81,10 @@ All fields are optional — the skill will ask for anything you omit.
 Every phase ends with a mandatory gate — the skill stops and asks for your approval before continuing.
 
 ### Phase 1 — Gather Inputs
-Collects and validates database, schema, tables, business questions, path choice, and ontology name. Presents a structured summary for confirmation.
+Collects and validates database, schema, tables, business questions, path choice, and ontology name. Discovers existing semantic views in the target schema and asks whether to reuse one as the base or create from scratch. Presents a structured summary for confirmation.
 
 ### Phase 2 — Analyze & Recommend Ontology
-Introspects source tables (or parses an OWL file) and proposes classes, relations, and a class hierarchy. You review and adjust before proceeding.
+Introspects source tables (or parses an OWL file) and proposes classes, relations, and a class hierarchy. If an existing semantic view was found in Phase 1, its curated metadata (column descriptions, relationships, metrics) enriches the proposals. You review and adjust before proceeding.
 
 ### Phase 3 — Visualize, Modify & Confirm
 Launches an interactive Streamlit visualizer with three tabs — Hierarchy (expandable trees), Ontology Graph (interactive node-edge diagram), and Coverage (design structure). A sidebar editor lets you add, remove, or modify classes and relations visually.
@@ -136,9 +136,17 @@ ontology-stack-builder/
 ├── SKILL.md                        # Skill definition (the 7-phase workflow)
 ├── pyproject.toml                  # Python dependencies
 ├── README.md
-└── scripts/
-    ├── introspect_schema.py        # Schema-first ontology discovery
-    ├── parse_owl.py                # OWL/RDF parser
-    ├── generate_ontology_sql.py    # SQL generator for Layers 1-3
-    └── visualize_ontology.py       # Streamlit visualizer
+├── scripts/
+│   ├── introspect_schema.py        # Schema-first ontology discovery
+│   ├── parse_owl.py                # OWL/RDF parser
+│   ├── generate_ontology_sql.py    # SQL generator for Layers 1-3
+│   ├── generate_spcs_scaffolding.py # SPCS graph service scaffolding (optional)
+│   └── visualize_ontology.py       # Streamlit visualizer
+└── specs/
+    └── features/ontology-stack-builder/
+        ├── requirements.md         # REQ-001 through REQ-015
+        ├── design.md               # Architecture, data flow, script details
+        └── tasks.md                # Implementation task tracking
 ```
+
+Semantic views (L4) and the Cortex Agent (L5) are created by native bundled skills (`semantic-view`, `cortex-agent`), not scripts.
