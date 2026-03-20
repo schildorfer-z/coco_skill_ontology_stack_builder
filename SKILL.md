@@ -48,10 +48,13 @@ This skill follows a 7-phase gated workflow. Each phase requires user confirmati
 Phase 1: GATHER INPUTS
   ├── Collect schema, business questions, optional OWL
   ├── Ask: KG path or direct-table path?
+  ├── Discover existing semantic views (Step 1b)
+  ├── Ask: use existing semantic as base, or create from scratch?
   └── ⚠️ GATE: Inputs confirmed
       │
 Phase 2: ANALYZE & RECOMMEND ONTOLOGY
   ├── Introspect schema OR parse OWL
+  ├── If existing semantic: enrich proposals with curated metadata
   ├── Propose classes, relations, mappings
   └── ⚠️ GATE: Ontology design confirmed
       │
@@ -73,14 +76,22 @@ Phase 4: GENERATE & DEPLOY ONTOLOGY LAYER (Layers 1-3)
   ├── ⚠️ GATE: SQL reviewed and approved
   └── Execute SQL → tables & views now exist in Snowflake
       │
-Phase 5: CREATE SEMANTIC VIEWS (Layer 4) — via `semantic-view` skill
-  ├── Ask user which models to create (1-3)
+Phase 4.5: ENSURE BASE SEMANTIC VIEW — via `semantic-view` skill
+  ├── If existing semantic chosen in Phase 1 → SKIP (already have base)
+  ├── Otherwise: invoke `semantic-view` skill on source tables
+  ├── Test base semantic via `semantic-view` skill (audit mode)
+  └── ⚠️ GATE: Base semantic view ready
+      │
+Phase 5: CREATE ONTOLOGY SEMANTIC VIEWS (Layer 4) — via `semantic-view` skill
+  ├── Ask user which ontology-layer models to create
+  │     (KG semantic [if KG path], Ontology semantic, Metadata semantic)
   ├── Invoke `semantic-view` skill (FastGen against deployed views)
   ├── Test each semantic view via `semantic-view` skill (audit mode)
-  └── ⚠️ GATE: Semantic views deployed, tested, and approved
+  └── ⚠️ GATE: Ontology semantic views deployed, tested, and approved
       │
 Phase 6: CREATE CORTEX AGENT (Layer 5) — via `cortex-agent` skill
-  ├── Invoke `cortex-agent` skill with semantic view tools
+  ├── Invoke `cortex-agent` skill with ALL semantic view tools:
+  │     base (existing or Phase 4.5) + ontology-layer (Phase 5) + graph tools
   ├── If KG + user wants: add graph tool scaffolding
   ├── Test agent via `cortex-agent` skill (test/debug mode)
   └── ⚠️ GATE: Agent working correctly
@@ -118,6 +129,43 @@ Options:
   - "No - Direct table path": Maps ontology directly to existing tables, no graph structure
 ```
 
+**Step 1b: Discover Existing Semantic Views**
+
+After collecting the schema and source tables, check whether the user already has semantic views deployed on the source data:
+
+```sql
+SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA};
+```
+
+Also use the `semantic-view` skill (discover/describe mode) to understand what tables each existing semantic view covers:
+```
+cortex semantic-views discover
+cortex semantic-views describe {DATABASE}.{SCHEMA}.{SEMANTIC_VIEW_NAME}
+```
+
+Then prompt the user:
+
+```
+ask_user_question: "I found N existing semantic view(s) in {DATABASE}.{SCHEMA}: [list names].
+  Do any of these already cover your source tables?"
+Options:
+  - "Yes — use my existing semantic view as the base": Reuses the existing semantic view as the
+    base data layer tool in the final agent. No duplicate base semantic will be created.
+  - "No — create everything from scratch": A new base semantic view will be created over the
+    source tables (Phase 4.5) before building the ontology layer.
+```
+
+If no semantic views are found, skip the question and default to "create from scratch."
+
+If user selects "Yes," record:
+- `existing_base_semantic`: The FQN of the existing semantic view (e.g., `DB.SCHEMA.MY_MODEL`)
+- `existing_semantic_tables`: The list of tables covered by the existing semantic (from describe output)
+
+This information is used in:
+- **Phase 2**: The existing semantic's curated column descriptions and relationships enrich ontology proposals
+- **Phase 4.5**: Skipped entirely if an existing base semantic is available
+- **Phase 6**: The existing semantic becomes the `query_data` tool in the agent
+
 Store all inputs as session variables. If user provides only some inputs, ask for the rest.
 
 **Self-check before gate**: Verify ALL required inputs are collected:
@@ -126,6 +174,8 @@ Store all inputs as session variables. If user provides only some inputs, ask fo
 - [ ] At least 3 business questions captured
 - [ ] Ontology name defined
 - [ ] KG vs direct-table path chosen
+- [ ] Checked for existing semantic views (`SHOW SEMANTIC VIEWS`)
+- [ ] User confirmed starting point (existing semantic vs. tables only)
 
 If any are missing, ask the user for them. Do NOT present the gate with incomplete inputs.
 
@@ -169,6 +219,27 @@ This script:
 3. Proposes ontology classes (one per table or entity type)
 4. Proposes relations from FK relationships and naming conventions
 5. Outputs `classes.json`, `relations.json`, `mappings.json`
+
+**If existing semantic view available (from Step 1b):**
+
+When the user has an existing semantic view, use the `semantic-view` skill (describe mode) to extract its curated metadata and enrich the ontology proposals:
+
+```
+cortex semantic-views describe {DATABASE}.{SCHEMA}.{EXISTING_SEMANTIC_VIEW}
+```
+
+The existing semantic model provides:
+- **Column descriptions** → Use as class property descriptions instead of auto-generated ones
+- **Relationships** → Map directly to ontology relation proposals (validates FK-based proposals)
+- **Dimensions/Facts/Metrics** → Inform which columns are important for each class
+- **Table references** → Confirm which source tables are in scope
+
+After running schema introspection (or OWL parsing), merge the existing semantic metadata:
+1. For each proposed class, check if the semantic model has a matching table — if so, import its column descriptions
+2. For each semantic model relationship, verify a corresponding ontology relation exists — if not, add one
+3. Use the semantic model's metric definitions to annotate key properties in `classes.json`
+
+This enrichment is additive — the introspection still runs, but produces better-documented results when a semantic model already describes the schema.
 
 **`classes.json` schema** — each entry MUST use these exact keys:
 ```json
@@ -528,20 +599,94 @@ Open the visualizer and confirm that concrete classes show as green (mapped) or 
 **Only after Steps A, B, C are done**, present the gate question using `ask_user_question`:
 
 ```
-ask_user_question: "Phase 4 deployment complete. All Layer 1-3 objects are deployed. The visualizer is showing the coverage mapping. Ready to proceed to Phase 5 (Semantic Views)?"
+ask_user_question: "Phase 4 deployment complete. All Layer 1-3 objects are deployed. The visualizer is showing the coverage mapping. Ready to proceed to Phase 4.5 (Base Semantic View)?"
 Options:
-  - "Yes, proceed to Phase 5"
+  - "Yes, proceed to Phase 4.5"
   - "No, I need to fix something first"
 ```
 
-DO NOT invoke the `semantic-view` skill, DO NOT start Phase 5, and DO NOT continue until the user explicitly confirms via the question above.
+DO NOT invoke the `semantic-view` skill, DO NOT start Phase 4.5 or Phase 5, and DO NOT continue until the user explicitly confirms via the question above.
 
-### Phase 5: Create Semantic Views (Layer 4) — via `semantic-view` skill
+### Phase 4.5: Ensure Base Semantic View — via `semantic-view` skill
 
-Ask the user which semantic views to create:
+The final delivery always includes a **base semantic view** that covers the source tables directly (for concrete data queries). This phase ensures one exists — either by reusing an existing semantic view or creating a new one.
+
+**If existing semantic view selected in Phase 1 (Step 1b):**
+
+Skip this phase entirely — including the Phase 4.5 gate below. The user's existing semantic view becomes the base. Record its FQN:
+```
+base_semantic_view = "{DATABASE}.{SCHEMA}.{EXISTING_SEMANTIC_VIEW_NAME}"
+```
+
+Proceed directly to Phase 5 (do NOT present the Phase 4.5 gate question).
+
+**If no existing semantic view (create from scratch):**
+
+Invoke the native **`semantic-view` skill** (creation mode) to build a base semantic view over the **original source tables** (not the VW_ONT_* views — those are covered in Phase 5):
 
 ```
-ask_user_question: "Which semantic views should I create?"
+skill: semantic-view
+
+Context to provide when the skill asks:
+  - Semantic view name: {ONTOLOGY_NAME}_BASE
+  - Target database: {DATABASE}
+  - Target schema: {SCHEMA}
+  - Table references: The original source tables from Phase 1
+    (e.g., COMPANIES_ENRICHED, SECURITIES, EXCHANGES, SECTORS, etc.)
+  - SQL queries: Convert the business questions from Phase 1 into SELECT statements
+    against the source tables (these become VQRs in the semantic model)
+  - Business context: "Base data layer semantic view for direct queries against source tables.
+    Use for specific entity lookups, aggregations, filtering by attributes, and concrete
+    data questions that don't require ontology reasoning."
+```
+
+The `semantic-view` skill will:
+1. Call FastGen to auto-generate the semantic model YAML from the source table metadata
+2. Validate the YAML via `SYSTEM$CREATE_SEMANTIC_VIEW_FROM_YAML(..., TRUE)`
+3. Present the generated model for review
+4. Deploy the semantic view
+
+**Step 4.5a: Test the base semantic view**
+
+Invoke the `semantic-view` skill in **audit** mode to validate:
+```
+skill: semantic-view
+
+Context: Audit the semantic view {DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_BASE
+  - Run 2-3 of the business questions from Phase 1 against the base semantic view
+  - Verify the generated SQL executes without errors
+  - Verify the results contain expected data (non-empty, reasonable values)
+  - If any query fails, use the skill's refine workflow to fix the semantic model
+```
+
+Record the base semantic view FQN:
+```
+base_semantic_view = "{DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_BASE"
+```
+
+**Self-check before gate**: Verify the base semantic view is ready:
+- [ ] Base semantic view exists: `SHOW SEMANTIC VIEWS LIKE '{ONTOLOGY_NAME}_BASE' IN SCHEMA {DATABASE}.{SCHEMA}`
+  (or existing semantic view confirmed in Phase 1)
+- [ ] At least 2 business questions returned non-empty results via audit
+- [ ] `base_semantic_view` FQN is recorded for use in Phase 6
+
+**⚠️ MANDATORY STOPPING POINT — DO NOT PROCEED TO PHASE 5**: You MUST use `ask_user_question`:
+
+```
+ask_user_question: "Base semantic view is ready ({base_semantic_view}). Ready to proceed to Phase 5 (Ontology Semantic Views)?"
+Options:
+  - "Yes, proceed to Phase 5"
+  - "No, I need to fix the base semantic view"
+```
+
+### Phase 5: Create Ontology Semantic Views (Layer 4) — via `semantic-view` skill
+
+> **Note**: The **base semantic view** (covering source tables directly) was already created or identified in Phase 4.5. This phase creates **ontology-layer** semantic views over the objects deployed in Phase 4 (VW_ONT_*, V_*, ONT_* tables).
+
+Ask the user which **ontology-layer** semantic views to create:
+
+```
+ask_user_question: "Which ontology-layer semantic views should I create? (The base semantic view over source tables is already ready from Phase 4.5.)"
 multiSelect: true
 Options:
   - "KG Semantic View": Concrete entity views (V_{CLASS}) and relationship views (V_{REL}) for fast direct queries
@@ -640,16 +785,26 @@ Options:
 
 ### Phase 6: Create Cortex Agent (Layer 5) — via `cortex-agent` skill
 
-**Step 6a: Gather semantic view references**
+**Step 6a: Gather ALL semantic view references**
 
-List all semantic views deployed in Phase 5:
+The agent must always include **at minimum** the base semantic view (from Phase 4.5) and at least one ontology-layer semantic view (from Phase 5). List all semantic views:
+
 ```sql
 SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA};
 ```
 
-Build the tool list: one `cortex_analyst_text_to_sql` tool per deployed semantic view. Each tool needs:
-- **Name**: Derived from the semantic view name (e.g., `kg_query_tool`, `ontology_query_tool`, `metadata_query_tool`)
-- **Description**: Intent-routing description explaining what questions the tool answers
+Build the tool list from **all** deployed semantic views:
+
+| Source | Semantic View | Tool Name | Purpose |
+|--------|--------------|-----------|---------|
+| Phase 4.5 (base) | `{base_semantic_view}` | `base_query_tool` | Direct queries against source tables — entity lookups, aggregations, filtering |
+| Phase 5 (KG) | `{ONTOLOGY_NAME}_KG_MODEL` | `kg_query_tool` | Concrete entity/relationship queries via V_* views (KG path only) |
+| Phase 5 (Ontology) | `{ONTOLOGY_NAME}_ONTOLOGY_MODEL` | `ontology_query_tool` | Cross-type reasoning via VW_ONT_* views |
+| Phase 5 (Metadata) | `{ONTOLOGY_NAME}_METADATA_MODEL` | `metadata_query_tool` | Governance, coverage, data quality via ONT_* tables |
+
+Each tool is a `cortex_analyst_text_to_sql` tool. Each needs:
+- **Name**: From the table above
+- **Description**: Intent-routing description explaining what questions the tool answers (include "When to Use" and "When NOT to Use")
 - **Semantic view FQN**: `{DATABASE}.{SCHEMA}.{SEMANTIC_VIEW_NAME}`
 
 **Step 6b: Check for graph analytics tools (KG path only)**
@@ -697,7 +852,15 @@ Context to provide when the skill asks:
 
   - Tools:
 
-    1. Semantic view tools (cortex_analyst_text_to_sql):
+    1. Base semantic view tool (ALWAYS included — from Phase 4.5):
+       Tool: name=base_query_tool, type=cortex_analyst_text_to_sql, semantic_view="{base_semantic_view}"
+         description: "Query source data directly — entity lookups, aggregations, filtering by attributes.
+           When to Use: specific entity questions, counts, statistics, filtering by properties,
+           concrete data retrieval from original source tables.
+           When NOT to Use: cross-type ontology reasoning (use ontology_query_tool),
+           hierarchy traversal (use graph tools), governance questions (use metadata_query_tool)."
+
+    2. Ontology-layer semantic view tools (from Phase 5):
        List each semantic view deployed in Phase 5:
        Tool: name={name}, type=cortex_analyst_text_to_sql, semantic_view="{FQN}"
          description: Include "When to Use" and "When NOT to Use" sections.
@@ -706,7 +869,7 @@ Context to provide when the skill asks:
             lookups, filtering by attributes, aggregations over typed views. When NOT
             to Use: hierarchy traversal questions (use graph tools instead)."
 
-    2. SQL UDF graph tools (generic) — only if deployed in Phase 4:
+    3. SQL UDF graph tools (generic) — only if deployed in Phase 4:
        Each tool needs type=generic with tool_resources type=function, a detailed
        description with routing hints, and an input_schema matching the UDF parameters.
 
@@ -770,11 +933,25 @@ Context to provide when the skill asks:
 
     Step 2: Route to the correct tool:
 
-    **Use semantic view tools when:**
-    - Question asks about specific entities by name or attribute
-    - Need aggregations, counts, or statistics over entity data
-    - Filtering by properties (dates, amounts, types, etc.)
-    - Questions do NOT involve hierarchy traversal keywords
+    **Use base_query_tool when:**
+    - Question asks about specific entities by name, attribute, or property from source data
+    - Need aggregations, counts, or statistics directly from source tables
+    - Questions are concrete data lookups (not ontology reasoning or hierarchy traversal)
+    - Example: "How many companies are in the Technology sector?", "List all securities for company X"
+
+    **Use ontology_query_tool / kg_query_tool when:**
+    - Question asks about entities through the ontology lens (typed views, cross-type reasoning)
+    - Need to query VW_ONT_* abstract views or V_* concrete views
+    - Questions involve ontology concepts like classes, mappings, or relationships
+    - Example: "Show all mapped entities of type Organization"
+
+    **Use metadata_query_tool when:**
+    - Questions about governance, coverage, data quality, mapping status
+    - Example: "What percentage of classes are mapped?", "Show unmapped relations"
+
+    [ONLY INCLUDE THE FOLLOWING GRAPH TOOL ROUTING IF KG PATH WAS CHOSEN AND GRAPH TOOLS WERE DEPLOYED IN PHASE 4]
+
+    **Use graph traversal tools when:**
 
     **Use expand_descendants_tool when:**
     - 'All types of X', 'everything under X', 'subtypes of X'
@@ -847,6 +1024,7 @@ skill: cortex-agent
 
 Context: Test the agent {DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_AGENT
   - Run one sample question per tool to confirm intent routing:
+    - Base semantic view question: e.g., "How many entities are in the source data?" or "List top 10 records from {SOURCE_TABLE}"
     - KG semantic view question (if applicable): e.g., "List all entities of type X"
     - Ontology semantic view question: e.g., "How many classes are mapped?"
     - Metadata semantic view question (if applicable): e.g., "Show all class mappings"
@@ -866,7 +1044,7 @@ The `cortex-agent` skill will run the queries, show which tool was invoked, and 
 
 **Self-check before gate**: Verify the agent is complete and functional:
 - [ ] `SHOW AGENTS IN SCHEMA {DATABASE}.{SCHEMA}` returns the agent ({ONTOLOGY_NAME}_AGENT)
-- [ ] Agent has one tool per deployed semantic view (count tools = count semantic views)
+- [ ] Agent has base_query_tool (from Phase 4.5) + one tool per ontology-layer semantic view (from Phase 5)
 - [ ] If SQL UDF graph tools deployed: 4 generic tools registered (expand_descendants, get_ancestors, get_hierarchy_path, get_direct_children)
 - [ ] If SPCS graph tools selected: SPCS service functions are registered as additional tools
 - [ ] Step 6e tests passed — each tool received at least one routed question with non-empty response
@@ -885,7 +1063,7 @@ Options:
 
 ### Phase 7: End-to-End Validation
 
-> **Note**: SQL artifacts (L1-L3) were deployed in Phase 4b. Semantic views (L4) and Cortex Agent (L5) were deployed by native skills in Phases 5 and 6. This phase validates the full stack.
+> **Note**: SQL artifacts (L1-L3) were deployed in Phase 4b. Base semantic view (L4-base) was deployed in Phase 4.5. Ontology-layer semantic views (L4-ontology) and Cortex Agent (L5) were deployed by native skills in Phases 5 and 6. This phase validates the full stack.
 
 **Step 7a: Validate all layers**
 
@@ -894,7 +1072,7 @@ Run validation queries across the full stack:
 - **L1 Physical**: Row counts for KG_NODE and KG_EDGE (if KG path)
 - **L2 Metadata**: Row counts for all ~22 ONT_* tables
 - **L3 Abstract Views**: Sample queries against each VW_ONT_* view
-- **L4 Semantic Views**: Verify via `SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA}`
+- **L4 Semantic Views**: Verify via `SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA}` — must include base semantic (Phase 4.5) + ontology-layer semantics (Phase 5)
 - **L5 Cortex Agent**: Run one end-to-end question through the agent:
   ```sql
   SELECT SNOWFLAKE.CORTEX.AGENT(
@@ -909,7 +1087,7 @@ Present a summary table of all deployed objects with row counts and status.
 - [ ] L1: KG_NODE and KG_EDGE have non-zero row counts (if KG path)
 - [ ] L2: All ~22 ONT_* tables exist and have seed data (row count > 0 for at least ONT_CLASS, ONT_RELATION_DEF, ONT_CLASS_MAP)
 - [ ] L3: Every VW_ONT_* view returns rows without errors
-- [ ] L4: `SHOW SEMANTIC VIEWS` count matches expected (from Phase 5 selections)
+- [ ] L4: `SHOW SEMANTIC VIEWS` count matches expected: 1 base (Phase 4.5) + N ontology-layer (Phase 5 selections)
 - [ ] L5: Agent query returned a meaningful response (not an error or empty)
 
 If any layer fails validation, report the specific failure and attempt to fix (re-execute SQL, re-deploy view, etc.) before presenting the gate. Do NOT present a "deployment complete" gate with known failures.
@@ -928,7 +1106,8 @@ Options:
 | Decision | Freedom | Default |
 |----------|---------|---------|
 | KG vs direct-table path | **High** | Ask in Phase 1 |
-| Which semantic models (1-3) | **High** | All 3 if KG, 2 if direct |
+| Use existing semantic vs create new base | **High** | Ask in Phase 1 (Step 1b) |
+| Which ontology-layer semantic models (1-3) | **High** | All 3 if KG, 2 if direct |
 | Graph analytics tools | **High** | Only offered if KG path |
 | Ontology class/relation design | **Medium** | AI recommends, user confirms |
 | View naming convention | **Low** | `VW_ONT_` prefix |
@@ -947,9 +1126,16 @@ Options:
 If invoked mid-session, check `/tmp/generated/`, `/tmp/ontology_parsed/`, and Snowflake objects for existing artifacts:
 - If `classes.json` exists → resume from Phase 3 (visualize)
 - If `*.sql` files exist but not yet executed → resume from Phase 4b (deploy SQL)
-- If `VW_ONT_*` views exist but no semantic views → resume from Phase 5 (semantic views via `semantic-view` skill)
-- If semantic views exist (`SHOW SEMANTIC VIEWS`) but no agent → resume from Phase 6 (agent via `cortex-agent` skill)
+- If `VW_ONT_*` views exist but no base semantic view → resume from Phase 4.5 (base semantic via `semantic-view` skill)
+- If base semantic view exists but no ontology-layer semantic views → resume from Phase 5 (ontology semantic views via `semantic-view` skill)
+- If ontology-layer semantic views exist but no agent → resume from Phase 6 (agent via `cortex-agent` skill)
 - If agent exists → resume from Phase 7 (validation)
+
+To detect base semantic view, run:
+```sql
+SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA};
+```
+Check if any semantic view covers the **source tables** (not VW_ONT_* or V_* views). If found, record it as `base_semantic_view` and skip Phase 4.5.
 
 Always confirm the detected state with the user before proceeding.
 
@@ -970,6 +1156,7 @@ SQL artifacts are saved to `/tmp/generated/` during the session. Semantic views 
 └── spcs_setup.sql               (if SPCS graph tools selected)
 
 Deployed directly to Snowflake (via native skills):
-├── Semantic views              (created by `semantic-view` skill in Phase 5)
+├── Base semantic view          (created by `semantic-view` skill in Phase 4.5, or existing)
+├── Ontology semantic views     (created by `semantic-view` skill in Phase 5)
 └── Cortex Agent                (created by `cortex-agent` skill in Phase 6)
 ```

@@ -4,4 +4,4 @@ __pycache__/
 .cortex/
 uv.lock
 DB_STOCK_*/
-ontology-stack-builder
+/ontology-stack-builder

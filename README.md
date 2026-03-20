@@ -22,7 +22,7 @@ For the architectural foundations, see the original blog series:
 | **L1 — Physical Storage** | Source table views or KG_NODE/KG_EDGE graph tables |
 | **L2 — Ontology Metadata** | ~22 metadata tables with auto-populated seed data |
 | **L3 — Abstract Views** | Per-class abstract views, hierarchy views, view-generator procedure |
-| **L4 — Semantic Views** | Up to 3 Cortex Analyst semantic views |
+| **L4 — Semantic Views** | Base semantic view (source tables) + ontology-layer semantic views |
 | **L5 — Cortex Agent** | Agent with intent-routed semantic view tools |
 
 ---
@@ -92,11 +92,14 @@ Launches an interactive Streamlit visualizer with three tabs — Hierarchy (expa
 ### Phase 4 — Generate & Deploy
 Generates SQL for all Layer 1-3 artifacts, runs a completeness check, and deploys to Snowflake. After deployment, generates a coverage manifest and re-launches the visualizer with color-coded mapping (green = deployed, gray = abstract).
 
-### Phase 5 — Semantic Views
-Delegates to the native `semantic-view` skill to create the selected models. Tests each model against the business questions from Phase 1.
+### Phase 4.5 — Ensure Base Semantic View
+If you have an existing semantic view over your source tables, the skill reuses it. Otherwise, it delegates to the native `semantic-view` skill to create a base semantic view covering your source tables directly. This ensures the final agent always has a tool for concrete data queries.
+
+### Phase 5 — Ontology Semantic Views
+Delegates to the native `semantic-view` skill to create ontology-layer models (KG, Ontology, Metadata) over the objects deployed in Phase 4. Tests each model against the business questions from Phase 1.
 
 ### Phase 6 — Cortex Agent
-Delegates to the native `cortex-agent` skill to create the orchestration layer with intent-routed tools — one per semantic view.
+Delegates to the native `cortex-agent` skill to create the orchestration layer with intent-routed tools — base semantic (Phase 4.5) + ontology-layer semantics (Phase 5) + optional graph tools.
 
 ### Phase 7 — End-to-End Validation
 Validates the full stack: row counts, sample queries, semantic view checks, and an end-to-end agent test.
@@ -105,11 +108,24 @@ Validates the full stack: row counts, sample queries, semantic view checks, and 
 
 ## Starting Points
 
+The skill adapts to what you already have:
+
+### By Ontology Source
+
 | Path | When to Use |
 |------|-------------|
 | **Schema-First Discovery** | You have Snowflake tables but no ontology. The skill analyzes your schema and proposes one. |
 | **OWL Import** | You have a formal ontology (OWL, RDF, Turtle, N-Triples, N3). The skill parses it and maps to your tables. |
 | **Hybrid** | Start with schema discovery, export, refine externally, re-import. |
+
+### By Existing Semantics
+
+| Scenario | What Happens |
+|----------|-------------|
+| **Have existing semantic view** | The skill discovers it in Phase 1, reuses it as the base semantic tool, and skips Phase 4.5. Existing metadata (column descriptions, relationships, metrics) enriches the ontology proposals in Phase 2. |
+| **Tables only (no semantic)** | The skill creates a base semantic view in Phase 4.5 via the `semantic-view` skill before building ontology-layer semantics. |
+
+Both scenarios also support KG path or direct-table path — the 2x2 combination (KG/Direct x Has Semantic/No Semantic) is fully handled.
 
 ---
 
