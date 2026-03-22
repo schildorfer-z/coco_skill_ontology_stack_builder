@@ -164,7 +164,7 @@ If user selects "Yes," record:
 This information is used in:
 - **Phase 2**: The existing semantic's curated column descriptions and relationships enrich ontology proposals
 - **Phase 4.5**: Skipped entirely if an existing base semantic is available
-- **Phase 6**: The existing semantic becomes the `query_data` tool in the agent
+- **Phase 6**: The existing semantic becomes the `base_query_tool` in the agent
 
 Store all inputs as session variables. If user provides only some inputs, ask for the rest.
 
@@ -785,27 +785,62 @@ Options:
 
 ### Phase 6: Create Cortex Agent (Layer 5) — via `cortex-agent` skill
 
-**Step 6a: Gather ALL semantic view references**
+**Step 6a: Build the tool inventory from prior phases**
 
-The agent must always include **at minimum** the base semantic view (from Phase 4.5) and at least one ontology-layer semantic view (from Phase 5). List all semantic views:
+Enumerate exactly which tools are available based on what was deployed in earlier phases. Do NOT include tools for semantic views or graph UDFs that were not created.
 
-```sql
-SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA};
+```
+TOOL_INVENTORY = []
 ```
 
-Build the tool list from **all** deployed semantic views:
+**1. Base semantic view (ALWAYS present):**
 
-| Source | Semantic View | Tool Name | Purpose |
-|--------|--------------|-----------|---------|
-| Phase 4.5 (base) | `{base_semantic_view}` | `base_query_tool` | Direct queries against source tables — entity lookups, aggregations, filtering |
-| Phase 5 (KG) | `{ONTOLOGY_NAME}_KG_MODEL` | `kg_query_tool` | Concrete entity/relationship queries via V_* views (KG path only) |
-| Phase 5 (Ontology) | `{ONTOLOGY_NAME}_ONTOLOGY_MODEL` | `ontology_query_tool` | Cross-type reasoning via VW_ONT_* views |
-| Phase 5 (Metadata) | `{ONTOLOGY_NAME}_METADATA_MODEL` | `metadata_query_tool` | Governance, coverage, data quality via ONT_* tables |
+```sql
+-- Verify the base semantic view exists
+SHOW SEMANTIC VIEWS LIKE '{base_semantic_view_name}' IN SCHEMA {DATABASE}.{SCHEMA};
+```
 
-Each tool is a `cortex_analyst_text_to_sql` tool. Each needs:
-- **Name**: From the table above
-- **Description**: Intent-routing description explaining what questions the tool answers (include "When to Use" and "When NOT to Use")
-- **Semantic view FQN**: `{DATABASE}.{SCHEMA}.{SEMANTIC_VIEW_NAME}`
+- Source: Phase 4.5 (newly created `{ONTOLOGY_NAME}_BASE`) **or** Phase 1 (existing semantic view selected by user)
+- FQN: `{base_semantic_view}` (recorded in Phase 4.5 or Phase 1)
+- Tool: `name=base_query_tool, type=cortex_analyst_text_to_sql`
+- → **Add `base_query_tool` to TOOL_INVENTORY**
+
+**2. Ontology-layer semantic views (only those actually created in Phase 5):**
+
+Check which ontology-layer semantic views the user selected and the `semantic-view` skill deployed. For EACH one that exists:
+
+- If **KG semantic view** was created (`{ONTOLOGY_NAME}_KG_MODEL`) → add `kg_query_tool` to TOOL_INVENTORY
+- If **Ontology semantic view** was created (`{ONTOLOGY_NAME}_ONTOLOGY_MODEL`) → add `ontology_query_tool` to TOOL_INVENTORY
+- If **Metadata semantic view** was created (`{ONTOLOGY_NAME}_METADATA_MODEL`) → add `metadata_query_tool` to TOOL_INVENTORY
+
+Do NOT add tools for semantic views that were not selected or not deployed.
+
+**3. Graph traversal UDFs (only if KG path AND deployed in Phase 4):**
+
+If KG path was chosen AND `07_graph_traversal_tools.sql` was generated and deployed:
+
+```sql
+-- Verify UDFs exist
+SHOW USER FUNCTIONS LIKE '%_TOOL' IN SCHEMA {DATABASE}.{SCHEMA};
+```
+
+- If all 4 UDFs exist → add `expand_descendants_tool`, `get_ancestors_tool`, `get_hierarchy_path_tool`, `get_direct_children_tool` to TOOL_INVENTORY
+
+If Direct path was chosen, skip this entirely — do not add any graph tools.
+
+**4. SPCS graph tools (only if selected in Step 6b):**
+
+If SPCS service functions were deployed → add each service function tool to TOOL_INVENTORY.
+
+**Cross-check:** Run `SHOW SEMANTIC VIEWS IN SCHEMA {DATABASE}.{SCHEMA};` and verify every semantic view maps to exactly one tool in TOOL_INVENTORY. Flag any mismatch.
+
+**Record the final inventory:**
+```
+TOOL_INVENTORY = [list of tool names]
+Total tools: {N}
+```
+
+Present this to the user before proceeding: *"The agent will have {N} tools: {list}. Correct?"*
 
 **Step 6b: Check for graph analytics tools (KG path only)**
 
@@ -850,26 +885,58 @@ Context to provide when the skill asks:
   - Target database: {DATABASE}
   - Target schema: {SCHEMA}
 
-  - Tools:
+  - Tools (include ONLY tools present in TOOL_INVENTORY — skip any section below
+    whose tool is not in the inventory):
 
-    1. Base semantic view tool (ALWAYS included — from Phase 4.5):
+    1. base_query_tool (ALWAYS in TOOL_INVENTORY):
        Tool: name=base_query_tool, type=cortex_analyst_text_to_sql, semantic_view="{base_semantic_view}"
-         description: "Query source data directly — entity lookups, aggregations, filtering by attributes.
-           When to Use: specific entity questions, counts, statistics, filtering by properties,
-           concrete data retrieval from original source tables.
-           When NOT to Use: cross-type ontology reasoning (use ontology_query_tool),
-           hierarchy traversal (use graph tools), governance questions (use metadata_query_tool)."
+         description: Build dynamically — include "When to Use" and "When NOT to Use".
+           When to Use: "specific entity questions, counts, statistics, filtering by properties,
+             concrete data retrieval from original source tables."
+           When NOT to Use: Build this list ONLY from other tools in TOOL_INVENTORY:
+             - If ontology_query_tool in TOOL_INVENTORY → "cross-type ontology reasoning (use ontology_query_tool)"
+             - If kg_query_tool in TOOL_INVENTORY → "concrete KG entity lookups (use kg_query_tool)"
+             - If metadata_query_tool in TOOL_INVENTORY → "governance questions (use metadata_query_tool)"
+             - If graph tools in TOOL_INVENTORY → "hierarchy traversal (use graph tools)"
+             Omit any line whose tool is NOT in TOOL_INVENTORY.
 
-    2. Ontology-layer semantic view tools (from Phase 5):
-       List each semantic view deployed in Phase 5:
-       Tool: name={name}, type=cortex_analyst_text_to_sql, semantic_view="{FQN}"
-         description: Include "When to Use" and "When NOT to Use" sections.
-         Example for a KG semantic view:
-           "Query concrete entity data and relationships. When to Use: specific entity
-            lookups, filtering by attributes, aggregations over typed views. When NOT
-            to Use: hierarchy traversal questions (use graph tools instead)."
+    2. Ontology-layer semantic view tools — one entry per tool in TOOL_INVENTORY
+       from Phase 5. Skip any that were not deployed:
 
-    3. SQL UDF graph tools (generic) — only if deployed in Phase 4:
+       IF kg_query_tool in TOOL_INVENTORY:
+         Tool: name=kg_query_tool, type=cortex_analyst_text_to_sql,
+               semantic_view="{DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_KG_MODEL"
+           description:
+             "When to Use: concrete entity/relationship queries via V_* typed views —
+               specific entity lookups, filtering by attributes, aggregations.
+             When NOT to Use: {only reference tools in TOOL_INVENTORY —
+               e.g., 'hierarchy traversal (use graph tools)' only if graph tools exist,
+               'source table queries (use base_query_tool)' always}"
+
+       IF ontology_query_tool in TOOL_INVENTORY:
+         Tool: name=ontology_query_tool, type=cortex_analyst_text_to_sql,
+               semantic_view="{DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_ONTOLOGY_MODEL"
+           description:
+             "When to Use: cross-type reasoning via VW_ONT_* abstract views —
+               questions spanning multiple entity types, ontology-level aggregations.
+             When NOT to Use: {only reference tools in TOOL_INVENTORY —
+               e.g., 'concrete source data (use base_query_tool)' always,
+               'governance/coverage (use metadata_query_tool)' only if it exists}"
+
+       IF metadata_query_tool in TOOL_INVENTORY:
+         Tool: name=metadata_query_tool, type=cortex_analyst_text_to_sql,
+               semantic_view="{DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_METADATA_MODEL"
+           description:
+             "When to Use: governance, coverage, data quality, mapping status
+               via ONT_* introspection tables.
+             When NOT to Use: {only reference tools in TOOL_INVENTORY —
+               e.g., 'entity data queries (use base_query_tool)' always,
+               'ontology reasoning (use ontology_query_tool)' only if it exists}"
+
+    3. SQL UDF graph tools — ONLY if graph tools are in TOOL_INVENTORY
+       (i.e., KG path chosen AND UDFs deployed in Phase 4).
+       If graph tools are NOT in TOOL_INVENTORY, skip this entire section.
+
        Each tool needs type=generic with tool_resources type=function, a detailed
        description with routing hints, and an input_schema matching the UDF parameters.
 
@@ -881,7 +948,7 @@ Context to provide when the skill asks:
            Returns NODE_ID, NODE_NAME, DEPTH, PATH for the root and every descendant.
            When to Use: questions with 'all types of', 'subtypes', 'derived from',
            'everything under X', cohort expansion.
-           When NOT to Use: single entity lookups (use semantic view), ancestor
+           When NOT to Use: single entity lookups (use base_query_tool), ancestor
            questions (use get_ancestors_tool)."
 
        Tool: name=get_ancestors_tool, type=generic
@@ -920,38 +987,56 @@ Context to provide when the skill asks:
            subtypes of X?', browsing one level at a time.
            When NOT to Use: need ALL descendants recursively (use expand_descendants_tool)."
 
-  - Orchestration instructions (provide this as the agent's orchestration prompt):
+  - Orchestration instructions — ASSEMBLE dynamically from TOOL_INVENTORY.
+    Only include routing blocks for tools that are actually in the inventory.
+    Do NOT include routing for tools the agent does not have.
+
+    (provide this as the agent's orchestration prompt):
 
     "You are an ontology-driven analytics agent for the {ONTOLOGY_NAME} domain.
+    You have {len(TOOL_INVENTORY)} tools: {comma-separated list of tool names from TOOL_INVENTORY}.
 
     ## Tool Selection Strategy
 
-    Step 1: Classify the question type:
-    - DATA QUERY: specific entity lookups, filtering, aggregation → semantic view tools
-    - HIERARCHY TRAVERSAL: descendants, ancestors, paths, subtypes → graph traversal tools
-    - METADATA/GOVERNANCE: coverage, mapping status, data quality → metadata semantic view
+    Step 1: Classify the question type and route to the correct tool:
+    {ASSEMBLE the classification list below — include ONLY lines whose tool is in TOOL_INVENTORY}
 
-    Step 2: Route to the correct tool:
+    - DATA QUERY: specific entity lookups, filtering, aggregation from source tables → base_query_tool
+    {IF ontology_query_tool in TOOL_INVENTORY:}
+    - ONTOLOGY REASONING: cross-type questions, abstract view queries → ontology_query_tool
+    {IF kg_query_tool in TOOL_INVENTORY:}
+    - ENTITY/RELATIONSHIP LOOKUP: concrete KG entity data via typed views → kg_query_tool
+    {IF metadata_query_tool in TOOL_INVENTORY:}
+    - METADATA/GOVERNANCE: coverage, mapping status, data quality → metadata_query_tool
+    {IF graph tools in TOOL_INVENTORY:}
+    - HIERARCHY TRAVERSAL: descendants, ancestors, paths, subtypes → graph traversal tools
+
+    Step 2: Detailed routing:
 
     **Use base_query_tool when:**
     - Question asks about specific entities by name, attribute, or property from source data
     - Need aggregations, counts, or statistics directly from source tables
-    - Questions are concrete data lookups (not ontology reasoning or hierarchy traversal)
-    - Example: "How many companies are in the Technology sector?", "List all securities for company X"
+    - Questions are concrete data lookups
+    - Example: 'How many companies are in the Technology sector?', 'List all securities for company X'
 
-    **Use ontology_query_tool / kg_query_tool when:**
-    - Question asks about entities through the ontology lens (typed views, cross-type reasoning)
-    - Need to query VW_ONT_* abstract views or V_* concrete views
-    - Questions involve ontology concepts like classes, mappings, or relationships
-    - Example: "Show all mapped entities of type Organization"
+    {IF ontology_query_tool in TOOL_INVENTORY — include this block:}
+    **Use ontology_query_tool when:**
+    - Cross-type reasoning via VW_ONT_* abstract views
+    - Questions spanning multiple entity types through the ontology lens
+    - Example: 'Show all mapped entities of type Organization'
 
+    {IF kg_query_tool in TOOL_INVENTORY — include this block:}
+    **Use kg_query_tool when:**
+    - Concrete entity/relationship queries via V_* typed views
+    - Need specific entity data or relationship data through the KG structure
+    - Example: 'List all V_COMPANY records', 'Show relationships for entity X'
+
+    {IF metadata_query_tool in TOOL_INVENTORY — include this block:}
     **Use metadata_query_tool when:**
     - Questions about governance, coverage, data quality, mapping status
-    - Example: "What percentage of classes are mapped?", "Show unmapped relations"
+    - Example: 'What percentage of classes are mapped?', 'Show unmapped relations'
 
-    [ONLY INCLUDE THE FOLLOWING GRAPH TOOL ROUTING IF KG PATH WAS CHOSEN AND GRAPH TOOLS WERE DEPLOYED IN PHASE 4]
-
-    **Use graph traversal tools when:**
+    {IF graph tools in TOOL_INVENTORY — include ALL FOUR blocks below:}
 
     **Use expand_descendants_tool when:**
     - 'All types of X', 'everything under X', 'subtypes of X'
@@ -973,10 +1058,19 @@ Context to provide when the skill asks:
     - Browsing the hierarchy one level at a time
     - Keywords: 'direct', 'immediate', 'one level'
 
+    {END graph tools conditional}
+
+    {IF len(TOOL_INVENTORY) > 2 — include Combining Tools section:}
     ## Combining Tools
     For complex questions, you may call multiple tools:
+    {IF graph tools in TOOL_INVENTORY:}
     - First expand a hierarchy, then query data about the expanded set
     - First find ancestors to understand classification, then query related entities
+    {IF metadata_query_tool in TOOL_INVENTORY:}
+    - First check metadata for coverage status, then query concrete data for uncovered areas
+    {ALWAYS if > 2 tools:}
+    - Use ontology tool for cross-type discovery, then base tool for detailed results
+    {END Combining Tools conditional}
     "
 
   - Response instructions: Return structured answers with source attribution.
@@ -1017,37 +1111,45 @@ Context: Edit agent {DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_AGENT
 
 **Step 6e: Test the agent via `cortex-agent` skill**
 
-Invoke the `cortex-agent` skill in **test/debug** mode to validate the agent works end-to-end:
+Invoke the `cortex-agent` skill in **test/debug** mode to validate the agent works end-to-end.
+
+Generate **one sample question per tool in TOOL_INVENTORY** using domain-specific examples from the business questions collected in Phase 1. Only test tools that exist:
 
 ```
 skill: cortex-agent
 
 Context: Test the agent {DATABASE}.{SCHEMA}.{ONTOLOGY_NAME}_AGENT
+  - The agent has {len(TOOL_INVENTORY)} tools: {list from TOOL_INVENTORY}
   - Run one sample question per tool to confirm intent routing:
-    - Base semantic view question: e.g., "How many entities are in the source data?" or "List top 10 records from {SOURCE_TABLE}"
-    - KG semantic view question (if applicable): e.g., "List all entities of type X"
-    - Ontology semantic view question: e.g., "How many classes are mapped?"
-    - Metadata semantic view question (if applicable): e.g., "Show all class mappings"
-    - If graph tools deployed, test each:
-      - expand_descendants_tool: "Show all subtypes of {ROOT_CLASS}" (use a root class from the ontology)
-      - get_ancestors_tool: "What categories does {LEAF_CLASS} belong to?" (use a leaf class)
-      - get_hierarchy_path_tool: "What is the path from {LEAF_CLASS} to {ROOT_CLASS}?"
-      - get_direct_children_tool: "What are the direct subtypes of {ROOT_CLASS}?"
-  - Verify each question routes to the correct tool (semantic view vs graph UDF)
+
+    FOR EACH tool in TOOL_INVENTORY, generate a test question:
+    - base_query_tool: A concrete data question from the Phase 1 business questions
+      e.g., "How many entities are in the source data?" or "List top 10 records from {SOURCE_TABLE}"
+    - kg_query_tool (only if in inventory): An entity/relationship question via typed views
+      e.g., "List all entities of type X"
+    - ontology_query_tool (only if in inventory): A cross-type reasoning question
+      e.g., "Show all mapped entities of type Organization"
+    - metadata_query_tool (only if in inventory): A governance/coverage question
+      e.g., "What percentage of classes are mapped?", "Show all class mappings"
+    - expand_descendants_tool (only if in inventory): "Show all subtypes of {ROOT_CLASS}"
+    - get_ancestors_tool (only if in inventory): "What categories does {LEAF_CLASS} belong to?"
+    - get_hierarchy_path_tool (only if in inventory): "What is the path from {LEAF_CLASS} to {ROOT_CLASS}?"
+    - get_direct_children_tool (only if in inventory): "What are the direct subtypes of {ROOT_CLASS}?"
+
+  - Verify each question routes to the CORRECT tool
   - Verify responses contain expected data (non-empty, hierarchy depths make sense)
-  - If a graph tool question routes to a semantic view instead (or vice versa), the
-    orchestration instructions need refinement — update tool descriptions or orchestration
+  - If a question routes to the wrong tool, the orchestration instructions need
+    refinement — update tool descriptions or orchestration
   - If any test fails, use the skill's debug workflow to diagnose and fix
 ```
 
 The `cortex-agent` skill will run the queries, show which tool was invoked, and flag routing or response issues.
 
-**Self-check before gate**: Verify the agent is complete and functional:
+**Self-check before gate**: Verify the agent matches TOOL_INVENTORY:
 - [ ] `SHOW AGENTS IN SCHEMA {DATABASE}.{SCHEMA}` returns the agent ({ONTOLOGY_NAME}_AGENT)
-- [ ] Agent has base_query_tool (from Phase 4.5) + one tool per ontology-layer semantic view (from Phase 5)
-- [ ] If SQL UDF graph tools deployed: 4 generic tools registered (expand_descendants, get_ancestors, get_hierarchy_path, get_direct_children)
-- [ ] If SPCS graph tools selected: SPCS service functions are registered as additional tools
-- [ ] Step 6e tests passed — each tool received at least one routed question with non-empty response
+- [ ] Agent total tool count matches TOOL_INVENTORY count: expected {len(TOOL_INVENTORY)} tools
+- [ ] Each tool name in TOOL_INVENTORY is registered in the agent (no missing, no extras)
+- [ ] Step 6e tests passed — each tool in TOOL_INVENTORY received at least one correctly-routed question with non-empty response
 - [ ] No unresolved errors from the `cortex-agent` skill
 
 If agent is missing, has wrong tool count, or tests failed, fix before presenting the gate.
