@@ -22,7 +22,7 @@ For the architectural foundations, see the original blog series:
 | **L1 — Physical Storage** | Source table views or KG_NODE/KG_EDGE graph tables |
 | **L2 — Ontology Metadata** | ~22 metadata tables with auto-populated seed data |
 | **L3 — Abstract Views** | Per-class abstract views, hierarchy views, view-generator procedure |
-| **L4 — Semantic Views** | Base semantic view (source tables) + ontology-layer semantic views |
+| **L4 — Semantic Views** | Base semantic view (reused from existing or created over source tables) + ontology-layer semantic views |
 | **L5 — Cortex Agent** | Agent with intent-routed tools: base + ontology + optional graph UDFs |
 
 ---
@@ -70,7 +70,7 @@ Semantic views: Ontology + Metadata
 | **Ontology name** | Prefix for all generated objects (e.g., `STOCK`) |
 | **Path** | *Knowledge Graph* — universal KG_NODE/KG_EDGE tables with graph analytics; duplicates data. *Direct Table* — views over existing tables; no data movement |
 | **Business questions** | Natural-language questions that guide semantic model creation |
-| **Semantic views** | Which models to create: *Ontology* (abstract reasoning), *Metadata* (governance/discovery), *KG* (concrete graph queries, KG path only) |
+| **Semantic views** | Which ontology-layer models to create on top of the base: *Ontology* (abstract reasoning), *Metadata* (governance/discovery), *KG* (concrete graph queries, KG path only). A base semantic view over the source tables is always present — reused from existing or created in Phase 4.5 |
 
 All fields are optional — the skill will ask for anything you omit.
 
@@ -90,7 +90,7 @@ Introspects source tables (or parses an OWL file) and proposes classes, relation
 Launches an interactive Streamlit visualizer with three tabs — Hierarchy (expandable trees), Ontology Graph (interactive node-edge diagram), and Coverage (design structure). A sidebar editor lets you add, remove, or modify classes and relations visually.
 
 ### Phase 4 — Generate & Deploy
-Generates SQL for all Layer 1-3 artifacts, runs a completeness check, and deploys to Snowflake. After deployment, generates a coverage manifest and re-launches the visualizer with color-coded mapping (green = deployed, gray = abstract).
+Generates SQL for all Layer 1-3 artifacts, runs a completeness check, and deploys to Snowflake. After deployment, generates a coverage manifest and re-launches the visualizer with four coverage states: green (mapped), blue (covered by ancestor), red (unmapped), gray (abstract).
 
 ### Phase 4.5 — Ensure Base Semantic View
 If you have an existing semantic view over your source tables, the skill reuses it. Otherwise, it delegates to the native `semantic-view` skill to create a base semantic view covering your source tables directly. This ensures the final agent always has a tool for concrete data queries.
@@ -129,6 +129,18 @@ Both scenarios also support KG path or direct-table path — the 2x2 combination
 
 ---
 
+## Optional Features
+
+Not every domain needs every feature. The skill surfaces these as explicit choices during the workflow:
+
+| Feature | When Offered | What It Does |
+|---------|-------------|-------------|
+| **Inference Engine** | Phase 4 (KG path) | Stored procedures for transitive closure, inverse relationship materialization, and cardinality/referential constraint checking |
+| **Graph Traversal UDFs** | Phase 4 (KG path) | 4 SQL table functions (expand descendants, get ancestors, find hierarchy path, list direct children) — pure SQL, no infrastructure |
+| **SPCS Graph Analytics** | Phase 6 (KG path) | Containerized NetworkX service for centrality, community detection, and shortest path via Snowpark Container Services |
+
+---
+
 ## Project Structure
 
 ```
@@ -136,12 +148,20 @@ ontology-stack-builder/
 ├── SKILL.md                        # Skill definition (the 7-phase workflow)
 ├── pyproject.toml                  # Python dependencies
 ├── README.md
+├── assets/
+│   └── ontology-graph.png          # Header image
 ├── scripts/
 │   ├── introspect_schema.py        # Schema-first ontology discovery
-│   ├── parse_owl.py                # OWL/RDF parser
+│   ├── parse_owl.py                # OWL/RDF parser (OWL, RDF, Turtle, N-Triples, N3)
 │   ├── generate_ontology_sql.py    # SQL generator for Layers 1-3
 │   ├── generate_spcs_scaffolding.py # SPCS graph service scaffolding (optional)
-│   └── visualize_ontology.py       # Streamlit visualizer
+│   └── visualize_ontology.py       # Streamlit visualizer with editor and coverage mapping
+├── references/
+│   ├── physical_layer_template.sql   # KG_NODE/KG_EDGE DDL template
+│   ├── metadata_tables_template.sql  # ONT_* table DDL template
+│   ├── abstract_views_template.sql   # VW_ONT_* view patterns
+│   ├── semantic_model_template.yaml  # Cortex Analyst YAML pattern
+│   └── agent_config_template.json    # Cortex Agent config pattern
 └── specs/
     └── features/ontology-stack-builder/
         ├── requirements.md         # REQ-001 through REQ-015
