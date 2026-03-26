@@ -127,6 +127,44 @@ The skill adapts to what you already have:
 
 Both scenarios also support KG path or direct-table path — the 2x2 combination (KG/Direct x Has Semantic/No Semantic) is fully handled.
 
+### End-State Asset Matrix
+
+The table below shows what gets created for each combination of starting point. Rows are grouped by layer; columns represent the four primary paths. Optional KG-only features are shown separately.
+
+**Core paths (always created):**
+
+| Layer | Artifact | KG + No Semantic | KG + Existing Semantic | Direct + No Semantic | Direct + Existing Semantic |
+|-------|----------|:---:|:---:|:---:|:---:|
+| **L1** | KG_NODE, KG_EDGE tables | Y | Y | — | — |
+| **L1** | V_{CLASS} entity views | Y (from KG_NODE) | Y (from KG_NODE) | Y (over source tables) | Y (over source tables) |
+| **L1** | V_{REL} relationship views | Y (from KG_EDGE) | Y (from KG_EDGE) | Y (over source tables) | Y (over source tables) |
+| **L2** | ~22 ONT_* metadata tables + seed data | Y | Y | Y | Y |
+| **L3** | VW_ONT_{CLASS} abstract views | Y | Y | Y | Y |
+| **L3** | VW_ONT_ALL_ENTITIES, hierarchy views | Y | Y | Y | Y |
+| **L3** | SP_GENERATE_ONTOLOGY_VIEWS | Y | Y | Y | Y |
+| **L4** | Base semantic view (source tables) | Created in Phase 4.5 | Reused from existing | Created in Phase 4.5 | Reused from existing |
+| **L4** | Ontology semantic view (VW_ONT_*) | If selected | If selected | If selected | If selected |
+| **L4** | Metadata semantic view (ONT_*) | If selected | If selected | If selected | If selected |
+| **L4** | KG semantic view (V_* views) | If selected | If selected | — | — |
+| **L5** | Cortex Agent | Y | Y | Y | Y |
+
+**Optional features (KG path only):**
+
+| Layer | Artifact | Description |
+|-------|----------|-------------|
+| **L2** | REL_EDGE_INFERRED, ONT_CONSTRAINT_VIOLATION | Created if inference engine selected |
+| **L2** | SP_INFER_TRANSITIVE, SP_INFER_INVERSE, SP_RUN_ONTOLOGY_INFERENCE | Created if inference engine selected |
+| **L2** | SP_CHECK_CARDINALITY_SINGLE, SP_CHECK_REFERENTIAL | Created if inference engine selected |
+| **L5** | EXPAND_DESCENDANTS_TOOL, GET_ANCESTORS_TOOL | Created if graph traversal UDFs selected |
+| **L5** | GET_HIERARCHY_PATH_TOOL, GET_DIRECT_CHILDREN_TOOL | Created if graph traversal UDFs selected |
+| **L5** | SPCS graph service + 3 service functions | Created if SPCS graph analytics selected |
+
+**Key differences by path:**
+- **KG path** creates physical graph tables (KG_NODE/KG_EDGE) and loads data into them. Concrete views extract typed projections from PROPS. Unlocks inference engine, graph UDFs, SPCS, and KG semantic view.
+- **Direct table path** creates no physical tables. Concrete views are thin wrappers over existing source tables. Lighter weight, no data duplication, but no graph analytics.
+- **Existing semantic** skips Phase 4.5 entirely and enriches Phase 2 ontology proposals with curated metadata from the existing model.
+- **No semantic** creates a new base semantic view in Phase 4.5 via the `semantic-view` skill.
+
 ---
 
 ## Optional Features
