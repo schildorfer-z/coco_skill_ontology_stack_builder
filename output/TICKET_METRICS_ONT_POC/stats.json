@@ -1,0 +1,16 @@
+{
+  "total_classes": 23,
+  "abstract_classes": 1,
+  "concrete_classes": 22,
+  "deprecated_classes": 0,
+  "root_classes": 23,
+  "max_hierarchy_depth": 0,
+  "total_relations": 29,
+  "hierarchical_relations": 0,
+  "transitive_relations": 0,
+  "total_individuals": 0,
+  "top_namespaces": {
+    "FUNCTIONAL.CONVERGE": 14,
+    "FUNCTIONAL.EDA_ML_DATA": 9
+  }
+}

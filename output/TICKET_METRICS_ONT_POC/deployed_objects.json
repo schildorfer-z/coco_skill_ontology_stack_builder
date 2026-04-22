@@ -1,0 +1,325 @@
+{
+  "ontology_name": "TICKET_METRICS_ONT_POC",
+  "database": "_SANDBOX_ONTOLOGY_POC",
+  "schema": "TICKET_METRICS",
+  "fully_qualified_schema": "_SANDBOX_ONTOLOGY_POC.TICKET_METRICS",
+  "deployed_at": "2026-04-15",
+  "path": "KG",
+  "layers": {
+    "01_physical": {
+      "description": "Knowledge Graph core tables with loaded data",
+      "tables": [
+        {"name": "KG_NODE", "type": "TABLE", "row_count": 49513116, "node_types": 22},
+        {"name": "KG_EDGE", "type": "TABLE", "row_count": 109074305, "edge_types": 5}
+      ]
+    },
+    "02_concrete_views": {
+      "description": "Typed views over KG_NODE and KG_EDGE with column projections",
+      "entity_views": [
+        "V_CRMACCOUNT",
+        "V_DATE",
+        "V_INSTANCEACCOUNT",
+        "V_AGGINSTANCEAGENTSUMMARYMONTHLY",
+        "V_AGGINSTANCECHANNELTICKETMONTHLY",
+        "V_AGGINSTANCEGUIDEMETRICMONTHLY",
+        "V_AGGINSTANCERBACHANNELMETRICMONTHLY",
+        "V_AGGINSTANCERBAMETRICMONTHLY",
+        "V_REFERENCEACCOUNTLOOKUP",
+        "V_TRANSFORMGONGACCOUNTMAP",
+        "V_TRANSFORMGONGOPPORTUNITIEMAP",
+        "V_TRANSFORMGONGTRACKERTAXONOMY",
+        "V_UNIFIEDGONGEVENT",
+        "V_UNIFIEDUSERVOICEEVENT",
+        "V_EDAMLCONTACTACTIVITYDAILYSNAPSHOT",
+        "V_EDAMLCONTACTDAILYSNAPSHOT",
+        "V_EDAMLCRMACCOUNTDAILYSNAPSHOT",
+        "V_EDAMLINSTANCEACCOUNTDAILYSNAPSHOT",
+        "V_EDAMLINSTANCECHANNELMONTHLYSNAPSHOT",
+        "V_EDAMLINSTANCEPRODUCTDAILYSNAPSHOT",
+        "V_EDAMLOPPORTUNITIEDAILYSNAPSHOT",
+        "V_EDAMLUSERDAILYSNAPSHOT",
+        "V_EDAMLUSERACCOUNTMAPPING"
+      ],
+      "relationship_views": [
+        "V_HAS_CRM_ACCOUNT",
+        "V_HAS_INSTANCE_ACCOUNT",
+        "V_BELONGS_TO_DATE",
+        "V_HAS_CONVERSATION",
+        "V_AGGINSTANCEAGENTDETAILMONTHLY"
+      ],
+      "note": "29 relations defined but only 5 unique EDGE_TYPEs exist; duplicate-named views (e.g. 9x has_crm_account) collapse to the last CREATE OR REPLACE. All edge data remains accessible via KG_EDGE and REL_RESOLVED."
+    },
+    "03_metadata": {
+      "description": "Ontology metadata catalog tables with seed data",
+      "tables": [
+        {"name": "ONT_CLASS", "rows": 23},
+        {"name": "ONT_RELATION_DEF", "rows": 29},
+        {"name": "ONT_CLASS_MAP", "rows": 23},
+        {"name": "ONT_REL_MAP", "rows": 22},
+        {"name": "ONT_ONTOLOGY", "rows": 1},
+        {"name": "ONT_OBJECT_SOURCE", "rows": 23},
+        {"name": "ONT_LINK_SOURCE", "rows": 5},
+        {"name": "ONT_SHARED_PROPERTY", "rows": 33},
+        {"name": "ONT_PROPERTY", "rows": 217},
+        {"name": "ONT_INTERFACE", "rows": 33},
+        {"name": "ONT_INTERFACE_PROPERTY", "rows": 33},
+        {"name": "ONT_INTERFACE_IMPL", "rows": 117},
+        {"name": "ONT_ROLE", "rows": 4},
+        {"name": "ONT_PERMISSION", "rows": 46},
+        {"name": "OBJ_VIEW_DEF", "rows": 23},
+        {"name": "OBJ_VIEW_FIELD", "rows": 0},
+        {"name": "ONT_DERIVED_PROPERTY", "rows": 0},
+        {"name": "ONT_FUNCTION", "rows": 0},
+        {"name": "ONT_FUNCTION_BINDING", "rows": 0},
+        {"name": "ONT_CONSTRAINT_VIOLATION", "rows": 0},
+        {"name": "ONT_RULE", "rows": 0},
+        {"name": "ONT_ROLE_BINDING", "rows": 0},
+        {"name": "REL_EDGE_INFERRED", "rows": 0},
+        {"name": "ACT_TYPE", "rows": 0},
+        {"name": "ACT_DEF", "rows": 0},
+        {"name": "ACT_INVOCATION", "rows": 0}
+      ]
+    },
+    "04_abstract_views": {
+      "description": "Ontology-aware abstract views with metadata joins",
+      "views": [
+        "VW_ONT_CRMACCOUNT",
+        "VW_ONT_DATE",
+        "VW_ONT_INSTANCEACCOUNT",
+        "VW_ONT_AGGINSTANCEAGENTSUMMARYMONTHLY",
+        "VW_ONT_AGGINSTANCECHANNELTICKETMONTHLY",
+        "VW_ONT_AGGINSTANCEGUIDEMETRICMONTHLY",
+        "VW_ONT_AGGINSTANCERBACHANNELMETRICMONTHLY",
+        "VW_ONT_AGGINSTANCERBAMETRICMONTHLY",
+        "VW_ONT_REFERENCEACCOUNTLOOKUP",
+        "VW_ONT_TRANSFORMGONGACCOUNTMAP",
+        "VW_ONT_TRANSFORMGONGOPPORTUNITIEMAP",
+        "VW_ONT_TRANSFORMGONGTRACKERTAXONOMY",
+        "VW_ONT_UNIFIEDGONGEVENT",
+        "VW_ONT_UNIFIEDUSERVOICEEVENT",
+        "VW_ONT_EDAMLCONTACTACTIVITYDAILYSNAPSHOT",
+        "VW_ONT_EDAMLCONTACTDAILYSNAPSHOT",
+        "VW_ONT_EDAMLCRMACCOUNTDAILYSNAPSHOT",
+        "VW_ONT_EDAMLINSTANCEACCOUNTDAILYSNAPSHOT",
+        "VW_ONT_EDAMLINSTANCECHANNELMONTHLYSNAPSHOT",
+        "VW_ONT_EDAMLINSTANCEPRODUCTDAILYSNAPSHOT",
+        "VW_ONT_EDAMLOPPORTUNITIEDAILYSNAPSHOT",
+        "VW_ONT_EDAMLUSERDAILYSNAPSHOT",
+        "VW_ONT_EDAMLUSERACCOUNTMAPPING",
+        "VW_ONT_ALL_ENTITIES",
+        "REL_RESOLVED"
+      ]
+    },
+    "05_view_generator": {
+      "description": "Stored procedure to regenerate ontology views from metadata",
+      "procedures": ["SP_GENERATE_ONTOLOGY_VIEWS"]
+    },
+    "06_inference_engine": {
+      "description": "Ontology inference and constraint-checking procedures",
+      "procedures": [
+        "SP_INFER_TRANSITIVE",
+        "SP_INFER_INVERSE",
+        "SP_RUN_ONTOLOGY_INFERENCE",
+        "SP_CHECK_CARDINALITY_SINGLE",
+        "SP_CHECK_REFERENTIAL"
+      ]
+    },
+    "07_graph_traversal": {
+      "description": "Graph traversal UDTFs for hierarchy exploration",
+      "udfs": [
+        "EXPAND_DESCENDANTS_TOOL",
+        "GET_ANCESTORS_TOOL",
+        "GET_HIERARCHY_PATH_TOOL",
+        "GET_DIRECT_CHILDREN_TOOL"
+      ]
+    },
+    "08_semantic_views": {
+      "description": "Semantic views for Cortex Analyst / Cortex Agent natural-language access",
+      "semantic_views": [
+        {
+          "name": "SV_CUSTOMER_TRENDED_TICKET_METRICS",
+          "fqn": "_SANDBOX_ONTOLOGY_POC.TICKET_METRICS.SV_CUSTOMER_TRENDED_TICKET_METRICS",
+          "layer": "base",
+          "phase": "4.5",
+          "tables": 8,
+          "dimensions": "~40",
+          "metrics": "~30"
+        },
+        {
+          "name": "SV_KG_TICKET_METRICS",
+          "fqn": "_SANDBOX_ONTOLOGY_POC.TICKET_METRICS.SV_KG_TICKET_METRICS",
+          "layer": "kg",
+          "phase": "5",
+          "tables": 12,
+          "relationships": 24,
+          "dimensions": 38,
+          "metrics": 27,
+          "note": "KG entity views + edge views + REL_RESOLVED. Non-additive RBA metrics declared as dimensions."
+        },
+        {
+          "name": "SV_ONT_TICKET_METRICS",
+          "fqn": "_SANDBOX_ONTOLOGY_POC.TICKET_METRICS.SV_ONT_TICKET_METRICS",
+          "layer": "ontology",
+          "phase": "5",
+          "tables": 24,
+          "relationships": 15,
+          "dimensions": 16,
+          "metrics": 3,
+          "note": "Abstract ontology views (VW_ONT_*) + REL_RESOLVED. PROPS variant for detailed properties."
+        },
+        {
+          "name": "SV_META_TICKET_METRICS",
+          "fqn": "_SANDBOX_ONTOLOGY_POC.TICKET_METRICS.SV_META_TICKET_METRICS",
+          "layer": "metadata",
+          "phase": "5",
+          "tables": 14,
+          "relationships": 13,
+          "dimensions": 60,
+          "metrics": 6,
+          "note": "Ontology catalog tables (ONT_*). Explore classes, relations, properties, mappings, roles."
+        }
+      ]
+    },
+    "09_cortex_agent": {
+      "description": "Cortex Agent for natural-language Q&A over the full ontology stack",
+      "agents": [
+        {
+          "name": "TICKET_METRICS_ONTOLOGY_AGENT",
+          "fqn": "_SANDBOX_ONTOLOGY_POC.TICKET_METRICS.TICKET_METRICS_ONTOLOGY_AGENT",
+          "phase": "6",
+          "tools": [
+            {"name": "query_ticket_metrics", "type": "cortex_analyst_text_to_sql", "semantic_view": "SV_CUSTOMER_TRENDED_TICKET_METRICS"},
+            {"name": "query_knowledge_graph", "type": "cortex_analyst_text_to_sql", "semantic_view": "SV_KG_TICKET_METRICS"},
+            {"name": "query_ontology_model", "type": "cortex_analyst_text_to_sql", "semantic_view": "SV_ONT_TICKET_METRICS"},
+            {"name": "query_metadata_catalog", "type": "cortex_analyst_text_to_sql", "semantic_view": "SV_META_TICKET_METRICS"}
+          ],
+          "model": "auto",
+          "budget_seconds": 900,
+          "budget_tokens": 400000
+        }
+      ]
+    }
+  },
+  "totals": {
+    "tables": 28,
+    "views": 54,
+    "semantic_views": 4,
+    "agents": 1,
+    "stored_procedures": 6,
+    "udfs": 4,
+    "total_objects": 97,
+    "kg_nodes": 49513116,
+    "kg_edges": 109074305,
+    "node_types": 22,
+    "edge_types": 5
+  },
+  "data_notes": {
+    "empty_node_type": "EdaMlContactActivityDailySnapshot — BCV view returns 0 rows; node type absent from KG_NODE",
+    "null_filtered": "EdaMlContactDailySnapshot — 58,575 rows with NULL CRM_ACCOUNT_ID excluded (4,830,408 loaded)",
+    "column_substitution": "EdaMlUserAccountMapping — USER_NAME column absent; CRM_USER_ID used as NAME surrogate"
+  },
+  "source": "User-described ontology from FUNCTIONAL.CONVERGE + FUNCTIONAL.EDA_ML_DATA",
+  "views": [
+    "V_CRMACCOUNT", "V_DATE", "V_INSTANCEACCOUNT",
+    "V_AGGINSTANCEAGENTSUMMARYMONTHLY", "V_AGGINSTANCECHANNELTICKETMONTHLY",
+    "V_AGGINSTANCEGUIDEMETRICMONTHLY", "V_AGGINSTANCERBACHANNELMETRICMONTHLY",
+    "V_AGGINSTANCERBAMETRICMONTHLY", "V_REFERENCEACCOUNTLOOKUP",
+    "V_TRANSFORMGONGACCOUNTMAP", "V_TRANSFORMGONGOPPORTUNITIEMAP",
+    "V_TRANSFORMGONGTRACKERTAXONOMY", "V_UNIFIEDGONGEVENT", "V_UNIFIEDUSERVOICEEVENT",
+    "V_EDAMLCONTACTACTIVITYDAILYSNAPSHOT", "V_EDAMLCONTACTDAILYSNAPSHOT",
+    "V_EDAMLCRMACCOUNTDAILYSNAPSHOT", "V_EDAMLINSTANCEACCOUNTDAILYSNAPSHOT",
+    "V_EDAMLINSTANCECHANNELMONTHLYSNAPSHOT", "V_EDAMLINSTANCEPRODUCTDAILYSNAPSHOT",
+    "V_EDAMLOPPORTUNITIEDAILYSNAPSHOT", "V_EDAMLUSERDAILYSNAPSHOT", "V_EDAMLUSERACCOUNTMAPPING",
+    "V_HAS_CRM_ACCOUNT", "V_HAS_INSTANCE_ACCOUNT", "V_BELONGS_TO_DATE",
+    "V_HAS_CONVERSATION", "V_AGGINSTANCEAGENTDETAILMONTHLY",
+    "VW_ONT_CRMACCOUNT", "VW_ONT_DATE", "VW_ONT_INSTANCEACCOUNT",
+    "VW_ONT_AGGINSTANCEAGENTSUMMARYMONTHLY", "VW_ONT_AGGINSTANCECHANNELTICKETMONTHLY",
+    "VW_ONT_AGGINSTANCEGUIDEMETRICMONTHLY", "VW_ONT_AGGINSTANCERBACHANNELMETRICMONTHLY",
+    "VW_ONT_AGGINSTANCERBAMETRICMONTHLY", "VW_ONT_REFERENCEACCOUNTLOOKUP",
+    "VW_ONT_TRANSFORMGONGACCOUNTMAP", "VW_ONT_TRANSFORMGONGOPPORTUNITIEMAP",
+    "VW_ONT_TRANSFORMGONGTRACKERTAXONOMY", "VW_ONT_UNIFIEDGONGEVENT",
+    "VW_ONT_UNIFIEDUSERVOICEEVENT", "VW_ONT_EDAMLCONTACTACTIVITYDAILYSNAPSHOT",
+    "VW_ONT_EDAMLCONTACTDAILYSNAPSHOT", "VW_ONT_EDAMLCRMACCOUNTDAILYSNAPSHOT",
+    "VW_ONT_EDAMLINSTANCEACCOUNTDAILYSNAPSHOT", "VW_ONT_EDAMLINSTANCECHANNELMONTHLYSNAPSHOT",
+    "VW_ONT_EDAMLINSTANCEPRODUCTDAILYSNAPSHOT", "VW_ONT_EDAMLOPPORTUNITIEDAILYSNAPSHOT",
+    "VW_ONT_EDAMLUSERDAILYSNAPSHOT", "VW_ONT_EDAMLUSERACCOUNTMAPPING",
+    "VW_ONT_ALL_ENTITIES", "REL_RESOLVED"
+  ],
+  "semantic_views": [
+    "SV_CUSTOMER_TRENDED_TICKET_METRICS",
+    "SV_KG_TICKET_METRICS",
+    "SV_ONT_TICKET_METRICS",
+    "SV_META_TICKET_METRICS"
+  ],
+  "tables": [
+    "KG_NODE", "KG_EDGE",
+    "ONT_CLASS", "ONT_RELATION_DEF", "ONT_CLASS_MAP", "ONT_REL_MAP",
+    "ONT_ONTOLOGY", "ONT_OBJECT_SOURCE", "ONT_LINK_SOURCE",
+    "ONT_SHARED_PROPERTY", "ONT_PROPERTY", "ONT_DERIVED_PROPERTY",
+    "ONT_INTERFACE", "ONT_INTERFACE_PROPERTY", "ONT_INTERFACE_IMPL",
+    "ONT_ROLE", "ONT_ROLE_BINDING", "ONT_PERMISSION",
+    "OBJ_VIEW_DEF", "OBJ_VIEW_FIELD",
+    "ONT_FUNCTION", "ONT_FUNCTION_BINDING",
+    "ONT_CONSTRAINT_VIOLATION", "ONT_RULE", "REL_EDGE_INFERRED",
+    "ACT_TYPE", "ACT_DEF", "ACT_INVOCATION"
+  ],
+  "procedures": [
+    "SP_GENERATE_ONTOLOGY_VIEWS",
+    "SP_INFER_TRANSITIVE", "SP_INFER_INVERSE", "SP_RUN_ONTOLOGY_INFERENCE",
+    "SP_CHECK_CARDINALITY_SINGLE", "SP_CHECK_REFERENTIAL"
+  ],
+  "udfs": [
+    "EXPAND_DESCENDANTS_TOOL", "GET_ANCESTORS_TOOL",
+    "GET_HIERARCHY_PATH_TOOL", "GET_DIRECT_CHILDREN_TOOL"
+  ],
+  "class_to_objects": {
+    "CrmAccount": {"views": ["V_CRMACCOUNT", "VW_ONT_CRMACCOUNT"], "metadata_row": "ONT_CLASS"},
+    "Date": {"views": ["V_DATE", "VW_ONT_DATE"], "metadata_row": "ONT_CLASS"},
+    "InstanceAccount": {"views": ["V_INSTANCEACCOUNT", "VW_ONT_INSTANCEACCOUNT"], "metadata_row": "ONT_CLASS"},
+    "AggInstanceAgentSummaryMonthly": {"views": ["V_AGGINSTANCEAGENTSUMMARYMONTHLY", "VW_ONT_AGGINSTANCEAGENTSUMMARYMONTHLY"], "metadata_row": "ONT_CLASS"},
+    "AggInstanceChannelTicketMonthly": {"views": ["V_AGGINSTANCECHANNELTICKETMONTHLY", "VW_ONT_AGGINSTANCECHANNELTICKETMONTHLY"], "metadata_row": "ONT_CLASS"},
+    "AggInstanceGuideMetricMonthly": {"views": ["V_AGGINSTANCEGUIDEMETRICMONTHLY", "VW_ONT_AGGINSTANCEGUIDEMETRICMONTHLY"], "metadata_row": "ONT_CLASS"},
+    "AggInstanceRbaChannelMetricMonthly": {"views": ["V_AGGINSTANCERBACHANNELMETRICMONTHLY", "VW_ONT_AGGINSTANCERBACHANNELMETRICMONTHLY"], "metadata_row": "ONT_CLASS"},
+    "AggInstanceRbaMetricMonthly": {"views": ["V_AGGINSTANCERBAMETRICMONTHLY", "VW_ONT_AGGINSTANCERBAMETRICMONTHLY"], "metadata_row": "ONT_CLASS"},
+    "ReferenceAccountLookup": {"views": ["V_REFERENCEACCOUNTLOOKUP", "VW_ONT_REFERENCEACCOUNTLOOKUP"], "metadata_row": "ONT_CLASS"},
+    "TransformGongAccountMap": {"views": ["V_TRANSFORMGONGACCOUNTMAP", "VW_ONT_TRANSFORMGONGACCOUNTMAP"], "metadata_row": "ONT_CLASS"},
+    "TransformGongOpportunitieMap": {"views": ["V_TRANSFORMGONGOPPORTUNITIEMAP", "VW_ONT_TRANSFORMGONGOPPORTUNITIEMAP"], "metadata_row": "ONT_CLASS"},
+    "TransformGongTrackerTaxonomy": {"views": ["V_TRANSFORMGONGTRACKERTAXONOMY", "VW_ONT_TRANSFORMGONGTRACKERTAXONOMY"], "metadata_row": "ONT_CLASS"},
+    "UnifiedGongEvent": {"views": ["V_UNIFIEDGONGEVENT", "VW_ONT_UNIFIEDGONGEVENT"], "metadata_row": "ONT_CLASS"},
+    "UnifiedUservoiceEvent": {"views": ["V_UNIFIEDUSERVOICEEVENT", "VW_ONT_UNIFIEDUSERVOICEEVENT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlContactActivityDailySnapshot": {"views": ["V_EDAMLCONTACTACTIVITYDAILYSNAPSHOT", "VW_ONT_EDAMLCONTACTACTIVITYDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlContactDailySnapshot": {"views": ["V_EDAMLCONTACTDAILYSNAPSHOT", "VW_ONT_EDAMLCONTACTDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlCrmAccountDailySnapshot": {"views": ["V_EDAMLCRMACCOUNTDAILYSNAPSHOT", "VW_ONT_EDAMLCRMACCOUNTDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlInstanceAccountDailySnapshot": {"views": ["V_EDAMLINSTANCEACCOUNTDAILYSNAPSHOT", "VW_ONT_EDAMLINSTANCEACCOUNTDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlInstanceChannelMonthlySnapshot": {"views": ["V_EDAMLINSTANCECHANNELMONTHLYSNAPSHOT", "VW_ONT_EDAMLINSTANCECHANNELMONTHLYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlInstanceProductDailySnapshot": {"views": ["V_EDAMLINSTANCEPRODUCTDAILYSNAPSHOT", "VW_ONT_EDAMLINSTANCEPRODUCTDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlOpportunitieDailySnapshot": {"views": ["V_EDAMLOPPORTUNITIEDAILYSNAPSHOT", "VW_ONT_EDAMLOPPORTUNITIEDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlUserDailySnapshot": {"views": ["V_EDAMLUSERDAILYSNAPSHOT", "VW_ONT_EDAMLUSERDAILYSNAPSHOT"], "metadata_row": "ONT_CLASS"},
+    "EdaMlUserAccountMapping": {"views": ["V_EDAMLUSERACCOUNTMAPPING", "VW_ONT_EDAMLUSERACCOUNTMAPPING"], "metadata_row": "ONT_CLASS"}
+  },
+  "relation_to_objects": {
+    "has_crm_account": {"view": "V_HAS_CRM_ACCOUNT", "metadata_row": "ONT_RELATION_DEF"},
+    "has_instance_account": {"view": "V_HAS_INSTANCE_ACCOUNT", "metadata_row": "ONT_RELATION_DEF"},
+    "belongs_to_date": {"view": "V_BELONGS_TO_DATE", "metadata_row": "ONT_RELATION_DEF"},
+    "has_conversation": {"view": "V_HAS_CONVERSATION", "metadata_row": "ONT_RELATION_DEF"},
+    "agginstanceagentdetailmonthly": {"view": "V_AGGINSTANCEAGENTDETAILMONTHLY", "metadata_row": "ONT_RELATION_DEF"},
+    "maps_user_to_account": {"view": null, "metadata_row": "ONT_RELATION_DEF"},
+    "snapshot_of_crm_account": {"view": null, "metadata_row": "ONT_RELATION_DEF"},
+    "snapshot_of_instance": {"view": null, "metadata_row": "ONT_RELATION_DEF"}
+  },
+  "source_schemas": [
+    "FUNCTIONAL.CONVERGE",
+    "FUNCTIONAL.EDA_ML_DATA"
+  ],
+  "bcv_views_used": [
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_CONTACTS_ACTIVITY_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_CONTACTS_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_CRM_ACCOUNTS_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_INSTANCE_ACCOUNTS_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_INSTANCE_CHANNELS_MONTHLY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_INSTANCE_PRODUCTS_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_OPPORTUNITIES_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_USERS_DAILY_SNAPSHOT_BCV",
+    "FUNCTIONAL.EDA_ML_DATA.EDA_ML_USER_ACCOUNT_MAPPING_BCV"
+  ]
+}

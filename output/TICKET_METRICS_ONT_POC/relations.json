@@ -1,0 +1,640 @@
+[
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from DIM_INSTANCE_ACCOUNT.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "InstanceAccount",
+    "domain_classes": [
+      "InstanceAccount"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "has_instance_account",
+    "label": "Has Instance Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY.INSTANCE_ACCOUNT_ID to DIM_INSTANCE_ACCOUNT.INSTANCE_ACCOUNT_ID",
+    "domain_class": "AggInstanceAgentSummaryMonthly",
+    "domain_classes": [
+      "AggInstanceAgentSummaryMonthly"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_instance_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "AggInstanceAgentSummaryMonthly",
+    "domain_classes": [
+      "AggInstanceAgentSummaryMonthly"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "belongs_to_date",
+    "label": "Belongs To Date",
+    "description": "FK relationship from FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY.MONTH_YEAR to DIM_DATE.MONTH_YEAR",
+    "domain_class": "AggInstanceAgentSummaryMonthly",
+    "domain_classes": [
+      "AggInstanceAgentSummaryMonthly"
+    ],
+    "range_class": "Date",
+    "range_classes": [
+      "Date"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:belongs_to_date"
+  },
+  {
+    "name": "has_instance_account",
+    "label": "Has Instance Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY.INSTANCE_ACCOUNT_ID to DIM_INSTANCE_ACCOUNT.INSTANCE_ACCOUNT_ID",
+    "domain_class": "AggInstanceChannelTicketMonthly",
+    "domain_classes": [
+      "AggInstanceChannelTicketMonthly"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_instance_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "AggInstanceChannelTicketMonthly",
+    "domain_classes": [
+      "AggInstanceChannelTicketMonthly"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "belongs_to_date",
+    "label": "Belongs To Date",
+    "description": "FK relationship from FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY.MONTH_YEAR to DIM_DATE.MONTH_YEAR",
+    "domain_class": "AggInstanceChannelTicketMonthly",
+    "domain_classes": [
+      "AggInstanceChannelTicketMonthly"
+    ],
+    "range_class": "Date",
+    "range_classes": [
+      "Date"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:belongs_to_date"
+  },
+  {
+    "name": "has_instance_account",
+    "label": "Has Instance Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY.INSTANCE_ACCOUNT_ID to DIM_INSTANCE_ACCOUNT.INSTANCE_ACCOUNT_ID",
+    "domain_class": "AggInstanceGuideMetricMonthly",
+    "domain_classes": [
+      "AggInstanceGuideMetricMonthly"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_instance_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "AggInstanceGuideMetricMonthly",
+    "domain_classes": [
+      "AggInstanceGuideMetricMonthly"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "belongs_to_date",
+    "label": "Belongs To Date",
+    "description": "FK relationship from FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY.MONTH_YEAR to DIM_DATE.MONTH_YEAR",
+    "domain_class": "AggInstanceGuideMetricMonthly",
+    "domain_classes": [
+      "AggInstanceGuideMetricMonthly"
+    ],
+    "range_class": "Date",
+    "range_classes": [
+      "Date"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:belongs_to_date"
+  },
+  {
+    "name": "has_instance_account",
+    "label": "Has Instance Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY.INSTANCE_ACCOUNT_ID to DIM_INSTANCE_ACCOUNT.INSTANCE_ACCOUNT_ID",
+    "domain_class": "AggInstanceRbaChannelMetricMonthly",
+    "domain_classes": [
+      "AggInstanceRbaChannelMetricMonthly"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_instance_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "AggInstanceRbaChannelMetricMonthly",
+    "domain_classes": [
+      "AggInstanceRbaChannelMetricMonthly"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "belongs_to_date",
+    "label": "Belongs To Date",
+    "description": "FK relationship from FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY.MONTH_YEAR to DIM_DATE.MONTH_YEAR",
+    "domain_class": "AggInstanceRbaChannelMetricMonthly",
+    "domain_classes": [
+      "AggInstanceRbaChannelMetricMonthly"
+    ],
+    "range_class": "Date",
+    "range_classes": [
+      "Date"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:belongs_to_date"
+  },
+  {
+    "name": "has_instance_account",
+    "label": "Has Instance Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY.INSTANCE_ACCOUNT_ID to DIM_INSTANCE_ACCOUNT.INSTANCE_ACCOUNT_ID",
+    "domain_class": "AggInstanceRbaMetricMonthly",
+    "domain_classes": [
+      "AggInstanceRbaMetricMonthly"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_instance_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "AggInstanceRbaMetricMonthly",
+    "domain_classes": [
+      "AggInstanceRbaMetricMonthly"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "belongs_to_date",
+    "label": "Belongs To Date",
+    "description": "FK relationship from FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY.MONTH_YEAR to DIM_DATE.MONTH_YEAR",
+    "domain_class": "AggInstanceRbaMetricMonthly",
+    "domain_classes": [
+      "AggInstanceRbaMetricMonthly"
+    ],
+    "range_class": "Date",
+    "range_classes": [
+      "Date"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:belongs_to_date"
+  },
+  {
+    "name": "has_conversation",
+    "label": "Has Conversation",
+    "description": "FK relationship from TRANSFORM_GONG_ACCOUNTS_MAP.CONVERSATION_KEY to UNIFIED_GONG_EVENTS.CONVERSATION_KEY",
+    "domain_class": "TransformGongAccountMap",
+    "domain_classes": [
+      "TransformGongAccountMap"
+    ],
+    "range_class": "UnifiedGongEvent",
+    "range_classes": [
+      "UnifiedGongEvent"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_conversation"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from TRANSFORM_GONG_ACCOUNTS_MAP.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "TransformGongAccountMap",
+    "domain_classes": [
+      "TransformGongAccountMap"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "has_conversation",
+    "label": "Has Conversation",
+    "description": "FK relationship from TRANSFORM_GONG_OPPORTUNITIES_MAP.CONVERSATION_KEY to UNIFIED_GONG_EVENTS.CONVERSATION_KEY",
+    "domain_class": "TransformGongOpportunitieMap",
+    "domain_classes": [
+      "TransformGongOpportunitieMap"
+    ],
+    "range_class": "UnifiedGongEvent",
+    "range_classes": [
+      "UnifiedGongEvent"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_conversation"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from TRANSFORM_GONG_OPPORTUNITIES_MAP.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "TransformGongOpportunitieMap",
+    "domain_classes": [
+      "TransformGongOpportunitieMap"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has Crm Account",
+    "description": "FK relationship from UNIFIED_USERVOICE_EVENTS.CRM_ACCOUNT_ID to DIM_CRM_ACCOUNT.CRM_ACCOUNT_ID",
+    "domain_class": "UnifiedUservoiceEvent",
+    "domain_classes": [
+      "UnifiedUservoiceEvent"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:has_crm_account"
+  },
+  {
+    "name": "agginstanceagentdetailmonthly",
+    "label": "Agginstanceagentdetailmonthly",
+    "description": "Many-to-many relationship via junction table FACT_AGG_INSTANCE_AGENTS_DETAIL_MONTHLY",
+    "domain_class": "InstanceAccount",
+    "domain_classes": [
+      "InstanceAccount"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": false,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:N",
+    "uri": "urn:rel:agginstanceagentdetailmonthly"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has CRM Account",
+    "description": "EDA_ML Contact Activity links to CRM accounts via CRM_ACCOUNT_ID",
+    "domain_class": "EdaMlContactActivityDailySnapshot",
+    "domain_classes": [
+      "EdaMlContactActivityDailySnapshot"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:eda_contact_activity_to_crm_account"
+  },
+  {
+    "name": "has_crm_account",
+    "label": "Has CRM Account",
+    "description": "EDA_ML Contact links to CRM accounts via CRM_ACCOUNT_ID",
+    "domain_class": "EdaMlContactDailySnapshot",
+    "domain_classes": [
+      "EdaMlContactDailySnapshot"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:eda_contact_to_crm_account"
+  },
+  {
+    "name": "maps_user_to_account",
+    "label": "Maps User To Account",
+    "description": "User-Account mapping links CRM users to CRM accounts. Critical for user-context filtering.",
+    "domain_class": "EdaMlUserAccountMapping",
+    "domain_classes": [
+      "EdaMlUserAccountMapping"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": false,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:N",
+    "uri": "urn:rel:user_account_mapping_to_crm_account"
+  },
+  {
+    "name": "maps_user_to_account",
+    "label": "Maps User To Account",
+    "description": "User-Account mapping links to CRM users from daily snapshot",
+    "domain_class": "EdaMlUserAccountMapping",
+    "domain_classes": [
+      "EdaMlUserAccountMapping"
+    ],
+    "range_class": "EdaMlUserDailySnapshot",
+    "range_classes": [
+      "EdaMlUserDailySnapshot"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": false,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:user_account_mapping_to_user"
+  },
+  {
+    "name": "has_instance_account",
+    "label": "Has Instance Account",
+    "description": "EDA_ML Instance Products links to instance accounts via INSTANCE_ACCOUNT_ID",
+    "domain_class": "EdaMlInstanceProductDailySnapshot",
+    "domain_classes": [
+      "EdaMlInstanceProductDailySnapshot"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:eda_product_to_instance"
+  },
+  {
+    "name": "snapshot_of_crm_account",
+    "label": "Snapshot Of CRM Account",
+    "description": "EDA_ML CRM Account Snapshot is a detailed daily version of the CRM Account dimension",
+    "domain_class": "EdaMlCrmAccountDailySnapshot",
+    "domain_classes": [
+      "EdaMlCrmAccountDailySnapshot"
+    ],
+    "range_class": "CrmAccount",
+    "range_classes": [
+      "CrmAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:eda_crm_snapshot_to_dim"
+  },
+  {
+    "name": "snapshot_of_instance",
+    "label": "Snapshot Of Instance",
+    "description": "EDA_ML Instance Account Snapshot is a detailed daily version of the Instance Account dimension",
+    "domain_class": "EdaMlInstanceAccountDailySnapshot",
+    "domain_classes": [
+      "EdaMlInstanceAccountDailySnapshot"
+    ],
+    "range_class": "InstanceAccount",
+    "range_classes": [
+      "InstanceAccount"
+    ],
+    "is_transitive": false,
+    "is_symmetric": false,
+    "is_functional": true,
+    "is_abstract": false,
+    "is_hierarchical": false,
+    "parent_name": null,
+    "inverse_name": null,
+    "cardinality": "N:1",
+    "uri": "urn:rel:eda_instance_snapshot_to_dim"
+  }
+]

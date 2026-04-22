@@ -1,0 +1,3333 @@
+{
+  "database": "FUNCTIONAL",
+  "schema": "CONVERGE",
+  "class_mappings": [
+    {
+      "class_name": "CrmAccount",
+      "source_table": "FUNCTIONAL.CONVERGE.DIM_CRM_ACCOUNT",
+      "filter_condition": null,
+      "id_column": "CRM_ACCOUNT_ID",
+      "name_column": "CRM_ACCOUNT_NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_OWNER_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUCCESS_OWNER_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "Date",
+      "source_table": "FUNCTIONAL.CONVERGE.DIM_DATE",
+      "filter_condition": null,
+      "id_column": "MONTH_YEAR",
+      "name_column": "MONTH_NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "MONTH_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "MONTH_YEAR_NUMBER",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALENDAR_YEAR",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALENDAR_QUARTER",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALENDAR_MONTH",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "MONTH_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "YEAR_QUARTER",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "YEAR_MONTH_LABEL",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "InstanceAccount",
+      "source_table": "FUNCTIONAL.CONVERGE.DIM_INSTANCE_ACCOUNT",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_SUBDOMAIN",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        }
+      ]
+    },
+    {
+      "class_name": "AggInstanceAgentSummaryMonthly",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "TOTAL_ACTIVE_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "REMAINING_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "TOTAL_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVE_AGENTS_FOR_PRODUCTIVITY",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_AGENTS_ADMIN",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_AGENTS_LIGHT",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_AGENTS_REGULAR",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "AggInstanceChannelTicketMonthly",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": "TICKET_CHANNEL_GROUP",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "TICKET_CHANNEL_GROUP",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "COUNT_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "COUNT_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "COUNT_CSAT_GOOD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "COUNT_CSAT_OFFERED",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "COUNT_CSAT_RESPONDED",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "AggInstanceGuideMetricMonthly",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "NEW_KB_ARTICLE_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_PUBLISHED_ARTICLES",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NEW_KB_ARTICLES_CREATED",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NEW_KB_COMMENTS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_ANSWERS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_QUESTIONS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "AggInstanceRbaChannelMetricMonthly",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": "RBA_CHANNEL_GROUP",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "RBA_CHANNEL_GROUP",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "AggInstanceRbaMetricMonthly",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "ReferenceAccountLookup",
+      "source_table": "FUNCTIONAL.CONVERGE.REFERENCE_ACCOUNT_LOOKUP",
+      "filter_condition": null,
+      "id_column": "ACCOUNT_ID",
+      "name_column": "ACCOUNT_NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "TransformGongAccountMap",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_ACCOUNTS_MAP",
+      "filter_condition": null,
+      "id_column": "CONVERSATION_KEY",
+      "name_column": "CRM_ACCOUNT_NAME",
+      "description_column": null,
+      "type_column": "CRM_ACCOUNT_TYPE",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CONVERSATION_KEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PARTNER_LEVEL_C",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "COMPETITOR_C",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "TOP_COMPETITOR_C",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_MARKET_SUPER_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "TransformGongOpportunitieMap",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_OPPORTUNITIES_MAP",
+      "filter_condition": null,
+      "id_column": "CONVERSATION_KEY",
+      "name_column": "CRM_ACCOUNT_NAME",
+      "description_column": null,
+      "type_column": "OPPORTUNITY_TYPE",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CONVERSATION_KEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_OPPORTUNITY_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_TYPE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_STATUS",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "STAGE_2_PLUS_DATE_C",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CLOSEDATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRODUCT_LIST",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "TransformGongTrackerTaxonomy",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_TRACKER_TAXONOMY",
+      "filter_condition": null,
+      "id_column": "TRACKER_ID",
+      "name_column": "NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "TRACKER_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "TRACKER_ARRAY",
+          "data_type": "ARRAY",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CAT1",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CAT2",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CAT3",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CAT4",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "UnifiedGongEvent",
+      "source_table": "FUNCTIONAL.CONVERGE.UNIFIED_GONG_EVENTS",
+      "filter_condition": null,
+      "id_column": "CONVERSATION_KEY",
+      "name_column": "TITLE",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CALL_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONVERSATION_KEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "TITLE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_SPOTLIGHT_BRIEF",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_SPOTLIGHT_NEXT_STEPS",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_SPOTLIGHT_KEY_POINTS",
+          "data_type": "ARRAY",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_SPOTLIGHT",
+          "data_type": "VARIANT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "TRANSCRIPT",
+          "data_type": "VARIANT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_SPOTLIGHT_OVERVIEW",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CALL_TRANSCRIPT_CURATED",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "UnifiedUservoiceEvent",
+      "source_table": "FUNCTIONAL.CONVERGE.UNIFIED_USERVOICE_EVENTS",
+      "filter_condition": null,
+      "id_column": "SUGGESTION_ID",
+      "name_column": "FORUM_NAME",
+      "description_column": null,
+      "type_column": "CRM_ACCOUNT_TYPE",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "SUGGESTION_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "REQUEST_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "FORUM_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CATEGORY_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SUGGESTION_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SUGGESTION_BODY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SUGGESTION_CREATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SUGGESTION_UPDATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SUGGESTION_STATE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "REQUEST_BODY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "REQUEST_CREATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "REQUEST_UPDATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_MARKET_SUPER_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "REQUEST_OVERVIEW",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlContactActivityDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_CONTACTS_ACTIVITY_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "ACTIVITY_ID",
+      "name_column": null,
+      "description_column": null,
+      "type_column": "ACTIVITY_CATEGORY",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "ACTIVITY_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVITY_SUBJECT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_EMAIL",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVITY_CATEGORY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVITY_TYPE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVITY_ZENDESK_DIVISION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVITY_ZENDESK_USER",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlContactDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_CONTACTS_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "CRM_ACCOUNT_ID",
+      "name_column": "CONTACT_TITLE",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_CONTACT_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_LAST_HUMAN_TOUCH",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_LAST_SALES_TOUCH_DATE_TIME",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_ROLE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_JOB_ROLE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_INTENT_SCORE_6_SENSE",
+          "data_type": "FLOAT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_TITLE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_EMAIL",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_PHONE_NUMBER",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_CREATED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CONTACT_LEAD_SOURCE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_WEB_VISITS_L30D",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_WEB_FORMS_L30D",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NUM_OPENED_EMAILS_L30D",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlCrmAccountDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_CRM_ACCOUNTS_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "CRM_ACCOUNT_SKEY",
+      "name_column": "CRM_PRIMARY_OWNER_NAME",
+      "description_column": null,
+      "type_column": "CRM_HEALTH_STATUS",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_OWNER_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_PRIMARY_OWNER_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRO_FORMA_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRO_FORMA_MARKET_SUBSEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRO_FORMA_MARKET_SUPER_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_DATE_BECAME_CUSTOMER",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_PARENT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_NEXT_RENEWAL_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_NUMBER_OF_EMPLOYEES",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_REVENUE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlInstanceAccountDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_INSTANCE_ACCOUNTS_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_SKEY",
+      "name_column": "INSTANCE_ACCOUNT_NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_SUBDOMAIN",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SEATS_CAPACITY",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SEATS_OCCUPIED",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SEAT_UTILIZATION",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "ACTIVE_AGENTS_L30D",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NEW_TICKETS_L30D",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOLVED_TICKETS_L30D",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlInstanceChannelMonthlySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_INSTANCE_CHANNELS_MONTHLY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "INSTANCE_ACCOUNT_CHANNEL_SKEY",
+      "name_column": null,
+      "description_column": null,
+      "type_column": "CHANNEL_GROUP",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_CHANNEL_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "MONTH_YEAR",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CHANNEL_GROUP",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_TTR_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlInstanceProductDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_INSTANCE_PRODUCTS_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "PRODUCT_SKEY",
+      "name_column": null,
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "PRODUCT_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRODUCT_OFFERING",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRODUCT_OFFERING_GROUPED",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "PRODUCT_PLAN",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SEATS",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "QUANTITY",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlOpportunitieDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_OPPORTUNITIES_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "CRM_OPPORTUNITY_SKEY",
+      "name_column": "OPPORTUNITY_NAME",
+      "description_column": null,
+      "type_column": "OPPORTUNITY_TYPE",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_OPPORTUNITY_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_OPPORTUNITY_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_CREATED_DATE",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_CLOSE_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_TYPE",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_STATUS",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_STAGE_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "OPPORTUNITY_BOOKING_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlUserDailySnapshot",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_USERS_DAILY_SNAPSHOT_BCV",
+      "filter_condition": null,
+      "id_column": "CRM_USER_SKEY",
+      "name_column": "USER_NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_USER_SKEY",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_USER_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_EMAIL",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "MANAGER_1_EMAIL",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    },
+    {
+      "class_name": "EdaMlUserAccountMapping",
+      "source_table": "FUNCTIONAL.EDA_ML_DATA.EDA_ML_USER_ACCOUNT_MAPPING_BCV",
+      "filter_condition": null,
+      "id_column": "CRM_ACCOUNT_ID",
+      "name_column": "USER_NAME",
+      "description_column": null,
+      "type_column": null,
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "CRM_USER_ID",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "data_type": "DATE",
+          "nullable": true,
+          "is_primary_key": true,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_NAME",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_EMAIL",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        },
+        {
+          "name": "USER_ROLE_ON_ACCOUNT",
+          "data_type": "TEXT",
+          "nullable": true,
+          "is_primary_key": false,
+          "is_foreign_key": false
+        }
+      ]
+    }
+  ],
+  "relation_mappings": [
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.DIM_INSTANCE_ACCOUNT",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_SUBDOMAIN",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_instance_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY",
+      "filter_condition": null,
+      "src_column": "INSTANCE_ACCOUNT_ID",
+      "dst_column": "INSTANCE_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "TOTAL_ACTIVE_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "REMAINING_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "TOTAL_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVE_AGENTS_FOR_PRODUCTIVITY",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_ADMIN",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_LIGHT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_REGULAR",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "TOTAL_ACTIVE_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "REMAINING_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "TOTAL_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVE_AGENTS_FOR_PRODUCTIVITY",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_ADMIN",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_LIGHT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_REGULAR",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "belongs_to_date",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_AGENTS_SUMMARY_MONTHLY",
+      "filter_condition": null,
+      "src_column": "MONTH_YEAR",
+      "dst_column": "MONTH_YEAR",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "TOTAL_ACTIVE_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "REMAINING_AGENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "TOTAL_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVE_AGENTS_FOR_PRODUCTIVITY",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_ADMIN",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_LIGHT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_AGENTS_REGULAR",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_instance_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "INSTANCE_ACCOUNT_ID",
+      "dst_column": "INSTANCE_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "COUNT_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_GOOD",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_OFFERED",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_RESPONDED",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "COUNT_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_GOOD",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_OFFERED",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_RESPONDED",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "belongs_to_date",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_CHANNEL_TICKETS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "MONTH_YEAR",
+      "dst_column": "MONTH_YEAR",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "COUNT_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CLOSED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_GOOD",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_OFFERED",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "COUNT_CSAT_RESPONDED",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_instance_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "INSTANCE_ACCOUNT_ID",
+      "dst_column": "INSTANCE_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "NEW_KB_ARTICLE_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_PUBLISHED_ARTICLES",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_KB_ARTICLES_CREATED",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_KB_COMMENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_ANSWERS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_QUESTIONS",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "NEW_KB_ARTICLE_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_PUBLISHED_ARTICLES",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_KB_ARTICLES_CREATED",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_KB_COMMENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_ANSWERS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_QUESTIONS",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "belongs_to_date",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_GUIDE_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "MONTH_YEAR",
+      "dst_column": "MONTH_YEAR",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "NEW_KB_ARTICLE_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_VIEWS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_PUBLISHED_ARTICLES",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_KB_ARTICLES_CREATED",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_KB_COMMENTS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_ANSWERS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_COMMUNITY_POST_QUESTIONS",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_instance_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "INSTANCE_ACCOUNT_ID",
+      "dst_column": "INSTANCE_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "belongs_to_date",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_CHANNEL_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "MONTH_YEAR",
+      "dst_column": "MONTH_YEAR",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_instance_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "INSTANCE_ACCOUNT_ID",
+      "dst_column": "INSTANCE_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "belongs_to_date",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_RBA_METRICS_MONTHLY",
+      "filter_condition": null,
+      "src_column": "MONTH_YEAR",
+      "dst_column": "MONTH_YEAR",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_PLUS_TOUCH_TICKETS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTC_MEDIAN_HOURS",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "data_type": "NUMBER",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_conversation",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_ACCOUNTS_MAP",
+      "filter_condition": null,
+      "src_column": "CONVERSATION_KEY",
+      "dst_column": "CONVERSATION_KEY",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PARTNER_LEVEL_C",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "COMPETITOR_C",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "TOP_COMPETITOR_C",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_MARKET_SUPER_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_ACCOUNTS_MAP",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PARTNER_LEVEL_C",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "COMPETITOR_C",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "TOP_COMPETITOR_C",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_MARKET_SUPER_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_conversation",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_OPPORTUNITIES_MAP",
+      "filter_condition": null,
+      "src_column": "CONVERSATION_KEY",
+      "dst_column": "CONVERSATION_KEY",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_OPPORTUNITY_ID",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_TYPE",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_STATUS",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "STAGE_2_PLUS_DATE_C",
+          "data_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CLOSEDATE",
+          "data_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "PRODUCT_LIST",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.TRANSFORM_GONG_OPPORTUNITIES_MAP",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_OPPORTUNITY_ID",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_TYPE",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_STATUS",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "STAGE_2_PLUS_DATE_C",
+          "data_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CLOSEDATE",
+          "data_type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "PRODUCT_LIST",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "has_crm_account",
+      "source_table": "FUNCTIONAL.CONVERGE.UNIFIED_USERVOICE_EVENTS",
+      "filter_condition": null,
+      "src_column": "CRM_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "FORUM_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CATEGORY_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SUGGESTION_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SUGGESTION_BODY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SUGGESTION_CREATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "SUGGESTION_UPDATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "SUGGESTION_STATE",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "REQUEST_BODY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "REQUEST_CREATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "REQUEST_UPDATED_AT",
+          "data_type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "data_type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_REGION",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_MARKET_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_MARKET_SUPER_SEGMENT",
+          "data_type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "REQUEST_OVERVIEW",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    },
+    {
+      "rel_name": "agginstanceagentdetailmonthly",
+      "source_table": "FUNCTIONAL.CONVERGE.FACT_AGG_INSTANCE_AGENTS_DETAIL_MONTHLY",
+      "filter_condition": null,
+      "src_column": "INSTANCE_ACCOUNT_ID",
+      "dst_column": "CRM_ACCOUNT_ID",
+      "props_column": null,
+      "columns": [
+        {
+          "name": "AGENT_ROLE",
+          "data_type": "TEXT",
+          "nullable": true
+        }
+      ]
+    }
+  ],
+  "questions": [
+    "How many tickets were created in total?",
+    "How many tickets were created for Sprinter Health?",
+    "Show me the monthly created ticket trend for Sprinter Health over the last 12 months",
+    "How many tickets were created in January 2025?",
+    "How many tickets did Printify solve in February 2026?",
+    "What is the year over year change in ticket volume for Printify?",
+    "What is the year over year change in ticket volume for Printify on the Messaging channel?",
+    "What is the CSAT score for Sprinter Health?",
+    "What is the CSAT response rate for printifysupport?",
+    "What is the change month over month in CSAT for Sprinter Health?",
+    "What is the (median) first response time in hours?",
+    "What is the change in FRT MoM for pinterest2 ?",
+    "What is the ttc for async channels in hours for printifysupport?",
+    "How many agents and admins does printifysupport have ?",
+    "Can you show me the monthly active agent count for printifysupport?",
+    "How many active agents does Sprinter Health have?",
+    "What is the agent productivity for Sprinter Health?",
+    "What was agent utilization for printifysupport in January 2026?",
+    "How many knowledge base article views were there for printifysupport ?",
+    "What is the combined one-touch and zero-touch ticket ratio?",
+    "What is the Time to Close (TTC) for each Zendesk instance associated with crm_user_id: 005PC00000gvu5KYAQ?",
+    "What is the (median) first response time in hours for Ticket Master?",
+    "What does agent productivity look like for printifysupport over the last 17 months?",
+    "What was the quarterly full resolution time last quarter for Printify?",
+    "What is the first reply time in business hours for printifysupport?",
+    "Can you give me the first reply time in minutes for printifysupport?",
+    "What is the change month over month in CSAT for Sprintr Helth?",
+    "How many active agents does Sprinted Health have?",
+    "What was agent utilization for printifysupprt in January 2026?",
+    "What is the number of closed tickets for each Zendesk instance associated with crm_user_id: 005PC00000gvu5KYAQ?"
+  ]
+}

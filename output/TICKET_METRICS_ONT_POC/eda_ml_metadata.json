@@ -1,0 +1,677 @@
+{
+  "database": "FUNCTIONAL",
+  "schema": "EDA_ML_DATA",
+  "tables": [
+    {
+      "name": "EDA_ML_CONTACTS_ACTIVITY_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "ACTIVITY_ID",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVITY_SUBJECT",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_EMAIL",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVITY_CATEGORY",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVITY_TYPE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVITY_ZENDESK_DIVISION",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVITY_ZENDESK_USER",
+          "type": "TEXT",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "ACTIVITY_ID",
+        "SOURCE_SNAPSHOT_DATE"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_CONTACTS_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "CRM_CONTACT_SKEY",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_LAST_HUMAN_TOUCH",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_LAST_SALES_TOUCH_DATE_TIME",
+          "type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_ROLE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_JOB_ROLE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_INTENT_SCORE_6_SENSE",
+          "type": "FLOAT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_TITLE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_EMAIL",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_PHONE_NUMBER",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_CREATED_DATE",
+          "type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "CONTACT_LEAD_SOURCE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "NUM_WEB_VISITS_L30D",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_WEB_FORMS_L30D",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NUM_OPENED_EMAILS_L30D",
+          "type": "NUMBER",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "CRM_CONTACT_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_CRM_ACCOUNTS_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_SKEY",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_OWNER_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_PRIMARY_OWNER_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_INDUSTRY",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_INDUSTRY",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_REGION",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_SUB_REGION",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PRO_FORMA_MARKET_SEGMENT",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PRO_FORMA_MARKET_SUBSEGMENT",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PRO_FORMA_MARKET_SUPER_SEGMENT",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_HEALTH_STATUS",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_DATE_BECAME_CUSTOMER",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CRM_PARENT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_TYPE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_NET_ARR_USD",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CRM_NEXT_RENEWAL_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "CRM_NUMBER_OF_EMPLOYEES",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CRM_REVENUE",
+          "type": "NUMBER",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "CRM_ACCOUNT_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_INSTANCE_ACCOUNTS_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "type": "NUMBER",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_SKEY",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_SUBDOMAIN",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_ARR_USD",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "SEATS_CAPACITY",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "SEATS_OCCUPIED",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "SEAT_UTILIZATION",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "ACTIVE_AGENTS_L30D",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CSAT_SCORE",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "NEW_TICKETS_L30D",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "SOLVED_TICKETS_L30D",
+          "type": "NUMBER",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "INSTANCE_ACCOUNT_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_INSTANCE_CHANNELS_MONTHLY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "INSTANCE_ACCOUNT_CHANNEL_SKEY",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "MONTH_YEAR",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "CHANNEL_GROUP",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CREATED_TICKETS",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_UNIQUE_AGENTS_WITH_SOLVED_TICKETS",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_SOLVED_TICKETS_PER_AGENT",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ZERO_TOUCH_TICKET_RATIO",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_ONE_TOUCH_TICKET_RATIO",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_REOPENED_TICKET_RATIO",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_FRT_MEDIAN_HOURS",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_TTR_MEDIAN_HOURS",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_SCORE",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "RBA_CSAT_RESPONSE_RATE",
+          "type": "NUMBER",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "INSTANCE_ACCOUNT_CHANNEL_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_INSTANCE_PRODUCTS_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "PRODUCT_SKEY",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "INSTANCE_ACCOUNT_ID",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "PRODUCT_OFFERING",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PRODUCT_OFFERING_GROUPED",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "PRODUCT_PLAN",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "NET_ARR_USD",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "SEATS",
+          "type": "NUMBER",
+          "nullable": true
+        },
+        {
+          "name": "QUANTITY",
+          "type": "NUMBER",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "PRODUCT_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_OPPORTUNITIES_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_OPPORTUNITY_ID",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "CRM_OPPORTUNITY_SKEY",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_CREATED_DATE",
+          "type": "TIMESTAMP_NTZ",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_CLOSE_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_TYPE",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_STATUS",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_STAGE_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "OPPORTUNITY_BOOKING_ARR_USD",
+          "type": "NUMBER",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "CRM_OPPORTUNITY_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_USERS_DAILY_SNAPSHOT",
+      "columns": [
+        {
+          "name": "CRM_USER_SKEY",
+          "type": "TEXT",
+          "nullable": true,
+          "primary_key": true
+        },
+        {
+          "name": "CRM_USER_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "USER_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "USER_EMAIL",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "USER_MARKET_SEGMENT",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "USER_REGION",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "USER_SUB_REGION",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "MANAGER_1_EMAIL",
+          "type": "TEXT",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "CRM_USER_SKEY"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    },
+    {
+      "name": "EDA_ML_USER_ACCOUNT_MAPPING",
+      "columns": [
+        {
+          "name": "CRM_ACCOUNT_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "CRM_USER_ID",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "SOURCE_SNAPSHOT_DATE",
+          "type": "DATE",
+          "nullable": true
+        },
+        {
+          "name": "USER_NAME",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "USER_EMAIL",
+          "type": "TEXT",
+          "nullable": true
+        },
+        {
+          "name": "USER_ROLE_ON_ACCOUNT",
+          "type": "TEXT",
+          "nullable": true
+        }
+      ],
+      "primary_keys": [
+        "CRM_ACCOUNT_ID",
+        "CRM_USER_ID",
+        "SOURCE_SNAPSHOT_DATE"
+      ],
+      "foreign_keys": [],
+      "row_count": 0
+    }
+  ]
+}
