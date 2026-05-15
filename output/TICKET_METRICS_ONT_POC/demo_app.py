@@ -246,6 +246,10 @@ with tab1:
     if "parent_message_id" not in st.session_state:
         st.session_state.parent_message_id = None
 
+    # Session state flag for pending sample question
+    if "pending_sample_question" not in st.session_state:
+        st.session_state.pending_sample_question = None
+
     # Sample question selector
     if not st.session_state.chat_messages:
         selected = st.pills(
@@ -255,6 +259,7 @@ with tab1:
         )
         if selected:
             st.session_state.chat_messages.append({"role": "user", "content": selected})
+            st.session_state.pending_sample_question = selected
             st.rerun()
 
     # Display chat history
@@ -275,13 +280,19 @@ with tab1:
             else:
                 st.markdown(msg["content"])
 
-    # Chat input
-    if prompt := st.chat_input("Ask a question about ticket metrics..."):
+    # Determine prompt: either from pending sample question or chat input
+    prompt = None
+    if st.session_state.pending_sample_question:
+        prompt = st.session_state.pending_sample_question
+        st.session_state.pending_sample_question = None
+    elif user_input := st.chat_input("Ask a question about ticket metrics..."):
+        prompt = user_input
         st.session_state.chat_messages.append({"role": "user", "content": prompt})
-
         with st.chat_message("user"):
             st.markdown(prompt)
 
+    # Call the agent if we have a prompt to process
+    if prompt:
         with st.chat_message("assistant"):
             with st.spinner("Agent is thinking..."):
                 # Build request body
