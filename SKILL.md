@@ -1,18 +1,33 @@
 ---
 name: ontology-stack-builder
-description: >
-  Generates the full Ontology-on-Snowflake stack from any relational schema and business questions.
-  Creates ontology metadata, abstract views, semantic models (up to 3), Cortex Agent config,
-  and optional graph analytics scaffolding. Supports OWL import or schema-first discovery.
-  Use when: build ontology stack, generate ontology from tables, ontology on snowflake,
-  create semantic models from schema, ontology layer generation, knowledge graph on snowflake,
-  map tables to ontology, generate cortex agent config, ontology stack builder.
-allowed-tools: "Read Write Edit Bash(python*) Bash(uv*) Bash(pip*) Bash(mkdir*) Bash(ls*) Bash(cp*) snowflake_sql_execute ask_user_question notebook_actions skill"
-metadata:
-  author: tjia
-  version: 1.0.0
-  category: workflow-automation
-  tags: [ontology, semantic-model, cortex-analyst, cortex-agent, knowledge-graph, snowflake]
+title: Build Ontology Stack on Snowflake
+summary: Generates the full Ontology-on-Snowflake stack from any relational schema through a 7-phase gated workflow.
+description: >-
+  Use for ALL requests that mention: ontology, knowledge graph, semantic layer from schema,
+  ontology-on-snowflake, abstract views, ontology metadata tables, KG_NODE, KG_EDGE,
+  build ontology stack, generate ontology from tables, ontology layer generation,
+  map tables to ontology, generate cortex agent config.
+  Triggers: build ontology, create ontology stack, schema-to-ontology, OWL import,
+  knowledge graph on snowflake, create semantic models from schema.
+  Do NOT use for: simple semantic view creation (use semantic-view skill),
+  standalone Cortex Agent creation (use cortex-agent skill).
+tools:
+  - snowflake_sql_execute
+  - snowflake_object_search
+  - Bash
+  - Read
+  - Write
+  - Edit
+  - Grep
+  - Glob
+  - ask_user_question
+  - skill
+prompt: "$ontology-stack-builder Build an ontology stack on MY_DB.MY_SCHEMA using tables TABLE_A, TABLE_B, TABLE_C"
+language: en
+status: Published
+author: Tianxia Jia
+type: Snowflake Staff
+demo-url: https://medium.com/snowflake/ontology-on-snowflake-from-architecture-to-deployment-with-a-cortex-code-skill-197866ce9c9f
 ---
 
 # Ontology Stack Builder

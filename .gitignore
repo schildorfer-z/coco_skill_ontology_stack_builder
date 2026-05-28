@@ -3,5 +3,5 @@ __pycache__/
 *.pyc
 .cortex/
 uv.lock
-DB_STOCK_*/
-/ontology-stack-builder
+.DS_Store
+output/
